@@ -20,7 +20,8 @@ class CreateSchedulesTable extends Migration
             $table->integer('program_id');
             $table->integer('course_id');
             $table->integer('teacher_id');
-            $table->integer('room_id');    
+            $table->integer('room_id');
+            $table->integer('level');    
             $table->integer('day_of_week');
             $table->integer('time_start');
             $table->integer('time_finish');

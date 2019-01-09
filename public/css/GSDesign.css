@@ -1,0 +1,21 @@
+.text-align {
+  text-align: center;
+}
+
+.brown {
+  background: brown;
+}
+
+/* BUTTONS */
+/* Form-Generate btn */
+.form-gen-sched-btn {
+  background: #e2e2e2;
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+  line-height: 3em;
+}
+
+.form-gen-sched-btn:hover {
+  cursor: pointer;
+}

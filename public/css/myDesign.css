@@ -1,0 +1,49 @@
+/* FOR HOME BLADE */
+.pink {
+  background: pink;
+}
+
+.yellow {
+	background: yellow;
+}
+
+#academic-wrapper {
+	padding: 0;
+	position: relative;
+	top: 0px;
+	right: 0px
+}
+#academic-wrapper > .card {
+	border-radius: 0px;
+}
+
+.text-align {
+	text-align: center;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.full-height {
+    height: 75vh;
+}
+
+.btn-outline-dark {
+	border: 1px solid #ced4da;
+}
+
+/*DELETE FOR ACADEMIC ITEMS*/
+.acadYr-items > a {
+	display: none;
+}
+.acadYr-items:hover {
+	background: #eeeeee;
+	cursor: pointer;
+}
+.acadYr-items:hover a {
+	display: block;
+}

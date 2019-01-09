@@ -42,12 +42,7 @@
                 Rooms
             </a>
         </li>
-        {{-- <li>
-            <a href="#">
-                <i class="fas fa-paper-plane"></i>
-                About us
-            </a>
-        </li> --}}
+        
     </ul>
 
 </nav>

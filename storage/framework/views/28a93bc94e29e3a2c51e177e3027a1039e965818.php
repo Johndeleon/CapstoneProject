@@ -1,18 +1,17 @@
-@extends('layouts.app1')
-
-@section('title')
+<?php $__env->startSection('title'); ?>
   Program Page
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('head')
-{{-- INSERT STYLE HERE --}}
-
-
-@endsection
+<?php $__env->startSection('head'); ?>
 
 
-@section('body')
-{{ csrf_field() }}
+
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('body'); ?>
+<?php echo e(csrf_field()); ?>
+
 
 <div class="container">
   <div class="row justify-content-center">
@@ -36,39 +35,30 @@
                   <th width="12%">Action</th>
                 </tr>
 
-                @foreach($programs as $program)
+                <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <tr>
                     <td>
-                      {{ $program->title }}
-                      {{-- <div class="container">
-                        <div class="dropdown">
-                            <div class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{$program->title}}
-                              <span class="caret"></span>
-                            </div>
-                            <ul class="dropdown-menu">
-                              @for($i=1;$i<=$program->levels;$i++)
-                                <a href="/program/{{$program->title}}/{{$i}}"><li>{{$i}}</li></a>
-                              @endfor
-                            </ul>
-                        </div>
-                      </div> --}}
+                      <?php echo e($program->title); ?>
+
+                      
                     </td>
 
                     <td>
-                      {{ $program->description }}
+                      <?php echo e($program->description); ?>
+
                     </td>
 
                     <td>
-                      <button class="item btn  btn-info" data-toggle="modal" role="Edit" title="Edit" data-target="#editProgram{{ $program->id }}">
+                      <button class="item btn  btn-info" data-toggle="modal" role="Edit" title="Edit" data-target="#editProgram<?php echo e($program->id); ?>">
                         <i class="fa fa-edit" aria-hidden="true"></i>
                       </button>
 
-                      <button class="item btn  btn-danger" data-toggle="modal" role="Delete" title="Delete" data-target="#deleteProgram{{ $program->id }}">
+                      <button class="item btn  btn-danger" data-toggle="modal" role="Delete" title="Delete" data-target="#deleteProgram<?php echo e($program->id); ?>">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </td>
                   </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </table>
 
             </div>
@@ -85,7 +75,7 @@
 
 
 
-        {{-- ADDPROGRAM MODAL --}}
+        
         <div class="modal fade show" id="addProgram" tabindex="-1" role="dialog" aria-labelledby="">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -97,7 +87,8 @@
               </div>
 
               <form action="/admin/addprogram" method="post">
-                {{ csrf_field() }}
+                <?php echo e(csrf_field()); ?>
+
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="programTitle">Program Name</label>
@@ -124,11 +115,12 @@
         </div>
 
 
-        @foreach ($programs as $program)
-        <div class="modal fade show" id="editProgram{{ $program->id }}" tabindex="-1" role="dialog" aria-labelledby="">
+        <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="modal fade show" id="editProgram<?php echo e($program->id); ?>" tabindex="-1" role="dialog" aria-labelledby="">
           <div class="modal-dialog modal-lg" role="document">
-            <form  method="POST" action="/editprogram/{{$program->id}}">
-            {{csrf_field()}}
+            <form  method="POST" action="/editprogram/<?php echo e($program->id); ?>">
+            <?php echo e(csrf_field()); ?>
+
               <div class="modal-content">
 
                 <div class="modal-header"> <h5 class="modal-title" id="">Edit Program</h5>
@@ -140,17 +132,17 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="programName">Program Name</label>
-                    <input name="title" type="text" class="form-control" id="" value="{{ $program->title }}" required>
+                    <input name="title" type="text" class="form-control" id="" value="<?php echo e($program->title); ?>" required>
                   </div>
 
                   <div class="form-group">
                     <label for="programDescription">Program Description</label>
-                    <textarea name="description" class="form-control" id="" rows="3" required>{{ $program->description }}</textarea>
+                    <textarea name="description" class="form-control" id="" rows="3" required><?php echo e($program->description); ?></textarea>
                   </div>
 
                   <div class="form-group">
                     <label for="levels">Levels</label>
-                    <input name="levels" type="number" class="form-control" id="" value="{{$program->levels}}" min=1 required>
+                    <input name="levels" type="number" class="form-control" id="" value="<?php echo e($program->levels); ?>" min=1 required>
                   </div>
                 </div>
 
@@ -163,10 +155,10 @@
             </form>
           </div>
         </div>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-        @foreach ($programs as $program)
-        <div class="modal fade show" id="deleteProgram{{ $program->id }}" tabindex="-1" role="dialog" aria-labelledby="">
+        <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="modal fade show" id="deleteProgram<?php echo e($program->id); ?>" tabindex="-1" role="dialog" aria-labelledby="">
           <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
 
@@ -179,7 +171,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
 
-                <form action="deleteprogram/{{$program->id}}" method="get">
+                <form action="deleteprogram/<?php echo e($program->id); ?>" method="get">
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
               </div>
@@ -187,11 +179,13 @@
             </div>
           </div>
         </div>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
       </div>
     </div>
   </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

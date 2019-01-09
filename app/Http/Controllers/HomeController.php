@@ -38,6 +38,7 @@ class HomeController extends Controller
 //@created by John, @since November 7
 public function showPrograms()
 {
+
     $userId = Auth::id();
     $access_level = User::select('access_level')
                     ->where('id', $userId)
@@ -50,7 +51,9 @@ public function showPrograms()
     //                     ->where('deleted_at',null)
     //                     ->get();
 
-    $programs = Program::all()->sortByDesc('created_at');
+    $programs = Program::all()
+    ->where('deleted_at',null)
+    ->sortByDesc('created_at');
 
     return view('admin.programs',compact('programs','accessLevel'));
 }
@@ -86,7 +89,6 @@ public function addProgram(Request $request)
     */
 
     $program= new Program();
-    $program->program_category_id = 5;
     $program->title = $request->title;
     $program->description = $request->description;
     $program->levels = $request->levels;
@@ -106,7 +108,7 @@ public function deleteProgram($id)
     $programDeletion->deleted_at = Carbon::now();
     $programDeletion->save();
 
-    return redirect('programs');
+    return redirect('admin/programs');
 }
 //@created by John, @since November 7
 public function editProgram(Request $request, $id)
@@ -119,7 +121,7 @@ public function editProgram(Request $request, $id)
     $program->levels=$request->levels;
     $program->save();
 
-    return redirect('programs');
+    return redirect('admin/programs');
 }
 //@created by John, @since November 8
 
@@ -149,10 +151,8 @@ public function showCourses()
     $courses=Course::where('deleted_at',null)
     ->get();
 
-    $courseCategories = CourseCategory::select('title','id')
-    ->get();
 
-    return view('admin.courses',compact('courses','courseCategories'))->with('accessLevel', $accessLevel)
+    return view('admin.courses',compact('courses'))->with('accessLevel', $accessLevel)
                           ->with('sidebar', $sidebar);
 }//@created by John @since November 9
 
@@ -167,7 +167,7 @@ public function editCourse(Request $request, $id)
     $course->description=$request->description;
     $course->save();
 
-    return redirect('courses');
+    return redirect('admin/courses');
 }
 //@created by John, @since November 10
 
@@ -175,19 +175,14 @@ public function deleteCourse($id)
 {
 $courseDeletion = Course::where('id',$id)
 ->first();
-
 $courseDeletion->deleted_at = Carbon::now();
 $courseDeletion->save();
-
-return redirect('courses');
+return redirect('admin/courses');
 }
 //@created by John, @since November 10
 
 public function addCourse(Request $request)
 {
-$courseCategory = CourseCategory::select('id')
-->where('id',$request->course_category)
-->first();
 
 for($i=0;$i< count($request->get('code'));$i++){
    $item = new Course();
@@ -195,12 +190,10 @@ for($i=0;$i< count($request->get('code'));$i++){
    $item->title = $request->title[$i];
    $item->description = $request->description[$i];
    $item->units = $request->units[$i];
-   $item->total_hours = $request->total_hours[$i];
-   $item->course_category_id = $request->course_category_id[$i];
    $item->save();
 }
 
-     return redirect('courses');
+     return redirect('admin/courses');
 
 }
 //@created by John, @since November 11,@edited by John since Dec 26
@@ -283,12 +276,35 @@ return redirect('course/'.$course->code);
 
 public function showTeachers()
 {
+
+  $user = Auth::id();
+      $access_level = User::select('access_level')
+      ->where('id',$user)
+      ->first();
+
+      if($access_level->access_level == 1)
+      {
+          $accessLevel = $access_level->access_level;
+          $sidebar = 'sidebar';
+      }
+      elseif($access_level->access_level == 2)
+      {
+          $accessLevel = $access_level->access_level;
+          $sidebar = 'sidebarProgHead';
+      }
+      elseif($access_level->access_level == 3)
+      {
+          $accessLevel = $access_level->access_level;
+          $sidebar = 'sidebarTeacher';
+      }
+
 $teachers = Teacher::where('deleted_at',null)
 ->get();
 
 return view('admin.teachers',compact('teachers'));
 
 }//@created by John, @since November 11
+
 
 public function addTeacher(Request $request)
 {
@@ -354,6 +370,27 @@ return redirect('teachers');
 
 public function showTeacher($id)
 {
+   $user = Auth::id();
+      $access_level = User::select('access_level')
+      ->where('id',$user)
+      ->first();
+
+      if($access_level->access_level == 1)
+      {
+          $accessLevel = $access_level->access_level;
+          $sidebar = 'sidebar';
+      }
+      elseif($access_level->access_level == 2)
+      {
+          $accessLevel = $access_level->access_level;
+          $sidebar = 'sidebarProgHead';
+      }
+      elseif($access_level->access_level == 3)
+      {
+          $accessLevel = $access_level->access_level;
+          $sidebar = 'sidebarTeacher';
+      }
+
 $teacher = Teacher::where('id',$id)
 ->first();
 
@@ -365,9 +402,9 @@ $teacherCourses = TeacherCourse::where('teacher_courses.teacher_id',$id)
 ->join('courses','teacher_courses.course_id','=','courses.id')
 ->get();
 
-$semesters = Semester::where('deleted_at',null)
-->join('academic_years','semesters.academic_year_id','=','academic_years.id')
-->get();
+// $semesters = Semester::where('deleted_at',null)
+// ->join('academic_years','semesters.academic_year_id','=','academic_years.id')
+// ->get();
 
 $availableTimes = AvailableTime::where('teacher_id',$id)
 ->where('deleted_at',null)
@@ -426,7 +463,9 @@ public function showRooms() {
 
   $accessLevel = $access_level[0];
 
-  $rooms = Room::where('rooms.deleted_at',null)
+  $rooms = Room::select('rooms.id','rooms.room_name','rooms.room_type_id','rooms.available_time_start'
+  ,'rooms.available_time_finish','room_types.room_type')
+  ->where('rooms.deleted_at',null)
   ->join('room_types','rooms.room_type_id','=','room_types.id')
   ->get();
 
@@ -482,7 +521,7 @@ $room->available_time_start = $request->available_from;
 $room->available_time_finish = $request->available_until;
 $room->save();
 
-return redirect('rooms');
+return redirect('admin/rooms');
 }//@created by John, @since November 13
 
 public function editRoom(Request $request, $id)
@@ -500,7 +539,7 @@ $room->available_time_start = $request->available_from;
 $room->available_time_finish = $request->available_until;
 $room->save();
 
-return redirect('rooms');
+return redirect('admin/rooms');
 }//@created by John, @since November 13
 
 public function deleteRoom($id)
@@ -511,7 +550,7 @@ $roomDeletion = Room::where('id',$id)
 $roomDeletion->deleted_at = Carbon::now();
 $roomDeletion->save();
 
-return redirect('rooms');
+return redirect('admin/rooms');
 }
 //@created by John, @since November 13
 
@@ -614,14 +653,14 @@ return redirect('rooms');
 
       $accessLevel = $access_level[0];
 
-      $programs = Program::all()->sortByDesc('created_at');
+      $programs = Program::where('deleted_at',null)->get()->sortByDesc('created_at');
 
       return view('admin.generateSchedule')
                   ->with('accessLevel', $accessLevel)
                   ->with('programs', $programs);
   }
 
-  public function getFormGenerateSchedule($id) {
+  public function getFormGenerateSchedule() {
       $userId = Auth::id();
       $access_level = User::select('access_level')
                       ->where('id', $userId)
@@ -629,20 +668,41 @@ return redirect('rooms');
 
       $accessLevel = $access_level[0];
 
-      $academicYears = AcademicYear::all()->sortByDesc('created_at');
+      $academicYears = AcademicYear::where('deleted_at',null)
+      ->get()
+      ->sortByDesc('created_at');
 
-      $courses = Course::all();
+      $courses = Course::where('deleted_at',null)
+      ->get();
 
-      $teachers = Teacher::all();
+      $teachers = Teacher::where('deleted_at',null)
+      ->get();
+
+      $roomTypes = RoomType::where('deleted_at',null)
+      ->get();
+
+      $programs = Program::where('deleted_at',null)
+      ->get();
 
       return view('admin.form-generate-schedule')
                   ->with('accessLevel', $accessLevel)
                   ->with('academicYears', $academicYears)
                   ->with('courses', $courses)
-                  ->with('teachers', $teachers);
+                  ->with('teachers', $teachers)
+                  ->with('roomTypes',$roomTypes)
+                  ->with('programs', $programs);
   }
 
   public function postForm(Request $request) {
+      $program_title = $request->program_title;
+      $program_id = Program::select('id')
+                            ->where('title', $program_title)
+                            ->where('deleted_at', null)
+                            ->pluck('id');
+
+      $program_id = $program_id[0];
+      $level = $request->level;
+      $roomtype= $request->roomtype;
       $academic_year = $request->academic_year;
       $semester = $request->semester;
       $courses = $request->courses;
@@ -652,6 +712,5 @@ return redirect('rooms');
 
       return $request->all();
   }
-
 
 }

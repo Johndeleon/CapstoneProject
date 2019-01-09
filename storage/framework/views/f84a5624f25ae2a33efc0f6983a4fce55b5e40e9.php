@@ -1,17 +1,16 @@
-@extends('layouts.app1')
-
-@section('body')
-  <link rel="stylesheet" href="{{ asset('css/myDesign.css') }}">
+<?php $__env->startSection('body'); ?>
+  <link rel="stylesheet" href="<?php echo e(asset('css/myDesign.css')); ?>">
 
   <div class="container-fluid mb-5">
       <div class="row">
           <div class="col-md-4">
 
-              @if (session('added'))
+              <?php if(session('added')): ?>
                   <div id="SuccAdded" class="alert alert-success" role="alert">
-                      {{ session('added') }}
+                      <?php echo e(session('added')); ?>
+
                   </div>
-              @endif
+              <?php endif; ?>
 
               <div class="card">
 
@@ -21,12 +20,13 @@
                   </a>
                 </div>
                 <div class="card-body">
-                    {{-- xx must be changed --}}
+                    
                     <h2>Teacher's Tab</h2>
 
-                    <form id="saveID" action="{{ URL::to('store/teacher') }}" class="form-group" method="post">
+                    <form id="saveID" action="<?php echo e(URL::to('store/teacher')); ?>" class="form-group" method="post">
 
-                      {{ csrf_field() }}
+                      <?php echo e(csrf_field()); ?>
+
                         <div class="form-group">
                           <label for="">First Name</label>
                           <input class="form-control" type="text" name="firstname" value="" required>
@@ -100,7 +100,7 @@
                 </div>
               </div>
 
-          </div> {{-- end of card div.col-md-4 --}}
+          </div> 
 
           <div class="col-md-8">
             <div class="card">
@@ -165,12 +165,7 @@
             </div>
 
             <div class="modal-body cat-modal-body">
-                {{-- <div class="form-group">
-                  <label>Monday: <b>7:00 - 20:00</b></label>
-                  <div class="slider">
-
-                  </div>
-                </div> --}}
+                
             </div>
 
             <div class="modal-footer">
@@ -293,4 +288,6 @@
   </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

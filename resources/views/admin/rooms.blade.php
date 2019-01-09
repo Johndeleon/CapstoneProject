@@ -68,6 +68,7 @@
           <div class="modal fade show" id="addRoom" tabindex="-1" role="dialog" aria-labelledby="">
             <div class="modal-dialog modal-lg" role="document">
               <form action="addroom" method="post">
+              {{csrf_field()}}
                 <div class="modal-content">
 
                   <div class="modal-header">
@@ -128,6 +129,7 @@
           <div class="modal fade show" id="editRoom{{ $room->id }}" tabindex="-1" role="dialog" aria-labelledby="">
             <div class="modal-dialog modal-lg" role="document">
               <form  method="POST" action="/editroom/{{$room->id}}">
+              {{csrf_field()}}
                 <div class="modal-content">
 
                   <div class="modal-header">

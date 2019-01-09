@@ -47,3 +47,17 @@
 .acadYr-items:hover a {
 	display: block;
 }
+
+/* TEACHERS PAGE */
+/* card-headers */
+.cat-ch {
+  background: #5ab9ea;
+  border-radius: 0;
+  height: 30px;
+  padding: 2px 10px 0 0;
+}
+
+/* card-body */
+.cat-b {
+  padding-top: 2px;
+}

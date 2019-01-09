@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,11 +10,10 @@
 |
 */
 
+Auth::routes();
 Route::get('/', function () {
     return redirect('/admin/dashboard');
 });
-
-Auth::routes();
 
 Route::group(['middleware' => 'App\Http\Middleware\AccessLevel2Middleware'], function()
 {
@@ -36,7 +34,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AccessLevel2Middleware'], fun
         Route::post('/editprogram/{id}','HomeController@editProgram')->name('editprogram');
         // @created by John @since Nov8, @updated by John @since Nov8
 
-        Route::get('/deleteprogram/{id}','HomeController@deleteProgram')->name('deleteprogram');
+        Route::get('admin/deleteprogram/{id}','HomeController@deleteProgram')->name('deleteprogram');
         // @created by John @since Nov7, @updated by John @since Nov7
 
         Route::get('/admin/courses','HomeController@showCourses')->name('showcourses');
@@ -48,7 +46,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AccessLevel2Middleware'], fun
         Route::get('/deletecourse/{id}','HomeController@deleteCourse')->name('deletecourse');
         // @created by John @since Nov10, @updated by John @since Nov10
 
-        Route::post('/addcourse','HomeController@addCourse')->name('addcourse');
+        Route::post('/admin/addcourse','HomeController@addCourse')->name('addcourse');
         // @created by John @since Nov11, @updated by John @since Nov11
 
         Route::get('/course/{code}','HomeController@showCourse')->name('showcourse');
@@ -73,13 +71,13 @@ Route::group(['middleware' => 'App\Http\Middleware\AccessLevel2Middleware'], fun
         Route::get('/admin/rooms','HomeController@showRooms')->name('showrooms');
         // @created by John @since Nov12, @updated by John @since Nov12
 
-        Route::post('/addroom','HomeController@addRoom')->name('addroom');
+        Route::post('admin/addroom','HomeController@addRoom')->name('addroom');
         // @created by John @since Nov13, @updated by John @since Nov13
 
         Route::post('/editroom/{id}','HomeController@editRoom')->name('editroom');
         // @created by John @since Nov13, @updated by John @since Nov13
 
-        Route::get('/deleteroom/{id}','HomeController@deleteRoom')->name('deleteroom');
+        Route::get('admin/deleteroom/{id}','HomeController@deleteRoom')->name('deleteroom');
         // @created by John @since Nov13, @updated by John @since Nov13
 
         Route::get('/generateschedule','GreedyAlgorithmController@generateSchedule')->name('generateSchedule');
@@ -126,10 +124,10 @@ Route::post('/store/teacher','HomeController@postTeacher')->name('postTeacher');
 // @created by Kenneth @since December 4, @updated by John @since December 4
 
 /* FORM FOR NEEDED IN GENERATION OF SCHEDULES */
-Route::get('/admin/generate-schedules','HomeController@getGenerateSchedule')->name('getGenerateSchedule');
+// Route::get('/admin/generate-schedules','HomeController@getGenerateSchedule')->name('getGenerateSchedule');
 // @created by Kenneth @since January 3, @updated by John @since January 3
 
-Route::get('/admin/generate-form/{id}','HomeController@getFormGenerateSchedule')->name('getFormGenerateSchedule');
+Route::get('/admin/generate-form-schedules','HomeController@getFormGenerateSchedule')->name('getFormGenerateSchedule');
 // @created by Kenneth @since January 3, @updated by John @since January 3
 
 Route::post('/generate', 'HomeController@postForm')->name('postForm');

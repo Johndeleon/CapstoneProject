@@ -1,13 +1,12 @@
-@extends('layouts.app1')
-
-@section('title')
+<?php $__env->startSection('title'); ?>
   Form Generate Schedule
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('body')
-  <link rel="stylesheet" href="{{ asset('css/GSDesign.css') }}">
+<?php $__env->startSection('body'); ?>
+  <link rel="stylesheet" href="<?php echo e(asset('css/GSDesign.css')); ?>">
 
-  {{ csrf_field() }}
+  <?php echo e(csrf_field()); ?>
+
 
   <div class="container-fluid">
     <a href="/admin/dashboard">
@@ -27,23 +26,23 @@
 
           <div class="card-body">
 
-            {{-- ACADEMIC YEAR --}}
+            
             <div class="form-group row">
               <label class="col-md-5 col-form-label">Academic Year: </label>
               <div class="col-md-6">
                 <select class="form-control academic_year" name="academic_year" required>
-                  @if (count($academicYears))
-                    @foreach ($academicYears as $academicYear)
-                        <option>{{ $academicYear->academic_year }}</option>
-                    @endforeach
-                  @else
+                  <?php if(count($academicYears)): ?>
+                    <?php $__currentLoopData = $academicYears; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $academicYear): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option><?php echo e($academicYear->academic_year); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php else: ?>
                         <option>No data stored</option>
-                  @endif
+                  <?php endif; ?>
                 </select>
               </div>
             </div>
 
-            {{-- SEMESTER --}}
+            
             <div class="form-group row">
               <label class="col-md-5 col-form-label">Semester: </label>
               <div class="col-md-6">
@@ -54,31 +53,31 @@
               </div>
             </div>
 
-            {{-- SELECT PROGRAM --}}
+            
             <div class="form-group row">
               <label class="col-md-5 col-form-label">Program: </label>
               <div class="col-md-6">
                 <select class="form-control program" name="program">
-                  @if (count($programs))
-                    @foreach ($programs as $program)
-                      <option>{{ $program->title }} </option>
-                    @endforeach
+                  <?php if(count($programs)): ?>
+                    <?php $__currentLoopData = $programs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $program): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <option><?php echo e($program->title); ?> </option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                  @else
+                  <?php else: ?>
                       <option>No programs stored</option>
-                  @endif
+                  <?php endif; ?>
                 </select>
               </div>
             </div>
 
-            {{-- SELECT Level --}}
+            
             <div class="form-group row">
               <label class="col-md-5 col-form-label">Level: </label>
               <div class="col-md-6">
                 <select class="form-control level" name="level">
-                  @for($i=1;$i<=5;$i++)
-                  <option>{{$i}}</option>
-                  @endfor
+                  <?php for($i=1;$i<=5;$i++): ?>
+                  <option><?php echo e($i); ?></option>
+                  <?php endfor; ?>
                 </select>
               </div>
             </div>
@@ -89,7 +88,7 @@
       </div>
 
       <div class="col-md-8">
-        {{-- COURSES, TEACHERS, TOTAL HOURS, MEETINGS, ROOMTYPE  --}}
+        
         <div class="card">
           <div class="card-header">
             Courses to scheduled
@@ -102,9 +101,9 @@
                     <label class="col-md-3 col-form-label">Subject: </label>
                     <div class="col-md-9">
                       <select class="form-control subject" name="courses" required>
-                        @foreach ($courses as $course)
-                            <option>{{ $course->title }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option><?php echo e($course->title); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -113,9 +112,9 @@
                     <label class="col-md-3 col-form-label">Teacher: </label>
                     <div class="col-md-9">
                       <select class="form-control teacher" name="teachers" required>
-                        @foreach ($teachers as $teacher)
-                            <option>{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $teachers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $teacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option><?php echo e($teacher->first_name); ?> <?php echo e($teacher->last_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -138,9 +137,9 @@
                   <label class="col-md-3 col-form-label">Room Type: </label>
                     <div class="col-md-9">
                       <select class="form-control room-type" name="room-type" required>
-                        @foreach ($roomTypes as $roomType)
-                            <option value="{{$roomType->id}}">{{ $roomType->room_type }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $roomTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $roomType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($roomType->id); ?>"><?php echo e($roomType->room_type); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -152,9 +151,9 @@
                     <label class="col-md-3 col-form-label">Subject: </label>
                     <div class="col-md-9">
                       <select class="form-control subject" name="courses" required>
-                        @foreach ($courses as $course)
-                            <option>{{ $course->title }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option><?php echo e($course->title); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -163,9 +162,9 @@
                     <label class="col-md-3 col-form-label">Teacher: </label>
                     <div class="col-md-9">
                       <select class="form-control teacher" name="teachers" required>
-                        @foreach ($teachers as $teacher)
-                            <option>{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $teachers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $teacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option><?php echo e($teacher->first_name); ?> <?php echo e($teacher->last_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -188,9 +187,9 @@
                   <label class="col-md-3 col-form-label">Room Type: </label>
                     <div class="col-md-9">
                       <select class="form-control room-type" name="room-type" required>
-                        @foreach ($roomTypes as $roomType)
-                            <option value="{{$roomType->id}}">{{ $roomType->room_type }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $roomTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $roomType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($roomType->id); ?>"><?php echo e($roomType->room_type); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -217,7 +216,7 @@
           </div>
 
 
-        </div> {{-- card end --}}
+        </div> 
       </div>
 
 
@@ -259,9 +258,9 @@
                       '<label class="col-md-3 col-form-label">Subject: </label>'+
                       '<div class="col-md-9">'+
                         '<select class="form-control subject" name="courses" required>'+
-                          '@foreach ($courses as $course)'+
-                              '<option>{{ $course->title }}</option>'+
-                          '@endforeach'+
+                          '<?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>'+
+                              '<option><?php echo e($course->title); ?></option>'+
+                          '<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>'+
                         '</select>'+
                       '</div>'+
                     '</div>'+
@@ -270,9 +269,9 @@
                       '<label class="col-md-3 col-form-label">Teacher: </label>'+
                       '<div class="col-md-9">'+
                         '<select class="form-control teacher" name="teachers" required>'+
-                          '@foreach ($teachers as $teacher)'+
-                              '<option>{{ $teacher->first_name }} {{ $teacher->last_name }}</option>'+
-                          '@endforeach'+
+                          '<?php $__currentLoopData = $teachers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $teacher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>'+
+                              '<option><?php echo e($teacher->first_name); ?> <?php echo e($teacher->last_name); ?></option>'+
+                          '<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>'+
                         '</select>'+
                       '</div>'+
                     '</div>'+
@@ -295,9 +294,9 @@
                   '<label class="col-md-3 col-form-label">Room Type: </label>'+
                     '<div class="col-md-9">'+
                       '<select class="form-control room-type" name="room-type" required>'+
-                        '@foreach ($roomTypes as $roomType)'+
-                            '<option value="{{$roomType->id}}">{{ $roomType->room_type }}</option>'+
-                        '@endforeach'+
+                        '<?php $__currentLoopData = $roomTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $roomType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>'+
+                            '<option value="<?php echo e($roomType->id); ?>"><?php echo e($roomType->room_type); ?></option>'+
+                        '<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>'+
                       '</select>'+
                     '</div>'+
                   '</div>'+
@@ -424,4 +423,6 @@
 
   });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app1', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -364,7 +364,7 @@
 
         // SAVING THE VALUE OF PROGRAM
         var program = $(document).find('.program').val();
-        
+
         // SAVING THE VALUE OF LEVEL
         var level = $(document).find('.level').val();
 

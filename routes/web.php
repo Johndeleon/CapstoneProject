@@ -130,5 +130,5 @@ Route::post('/store/teacher','HomeController@postTeacher')->name('postTeacher');
 Route::get('/admin/generate-form-schedules','HomeController@getFormGenerateSchedule')->name('getFormGenerateSchedule');
 // @created by Kenneth @since January 3, @updated by John @since January 3
 
-Route::post('/generate', 'HomeController@postForm')->name('postForm');
+Route::post('/generate', 'GreedyAlgorithmController@generateSchedule')->name('generateSchedule');
 // @created by Kenneth @since January 3, @updated by John @since January 3

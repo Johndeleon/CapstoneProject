@@ -12,9 +12,11 @@ use App\Room;
 use App\AvailableTime;
 use App\Schedule;
 use App\Course;
+use App\Program;
 
 class GreedyAlgorithmController extends Controller
 {
+
     public function generateSchedule(Request $request)
     {
         $program_title = $request->program_title;
@@ -22,16 +24,16 @@ class GreedyAlgorithmController extends Controller
                               ->where('title', $program_title)
                               ->where('deleted_at', null)
                               ->pluck('id');
-  
-        $program = $program_id[0];
+
+        $program_id = $program_id[0];
         $level = $request->level;
-        $roomType= $request->roomtype;
+        $roomtype= $request->roomtype;
         $academic_year = $request->academic_year;
         $semester = $request->semester;
         $courses = $request->courses;
         $teachers = $request->teachers;
-        $totalHours = $request->total_hours;
-        $meetings = $request->meeting;
+        $total_hours = $request->total_hours;
+        $meeting = $request->meeting;
 
         // $numCourses = count($courses);
 
@@ -55,7 +57,7 @@ class GreedyAlgorithmController extends Controller
         //     print_r($roomType);
         //     print('<br>');
         //     print('<br>');
-            
+
 
         // //course loop
         // for($i = 0; $i < $numCourses; $i++)
@@ -65,7 +67,7 @@ class GreedyAlgorithmController extends Controller
         //     ->where('title',$courses[$i])
         //     ->first();
 
-        
+
         //     if($meetings[$i] == 1 && $totalHours[$i] == 2)
         //         {
         //             $dailyHours[] = 200;
@@ -73,28 +75,28 @@ class GreedyAlgorithmController extends Controller
         //     elseif($meetings[$i] == 2 && $totalHours[$i] == 2)
         //         {
         //             $dailyHours[] = 100;
-        //             $dailyHours[] = 100;   
+        //             $dailyHours[] = 100;
         //         }
         //     elseif($meetings[$i] == 3 && $totalHours[$i] == 2)
         //         {
         //             $meetings[$i] = 2;
         //             $dailyHours[] = 100;
-        //             $dailyHours[] = 100;   
+        //             $dailyHours[] = 100;
         //         }
         //     elseif($meetings[$i] == 1 && $totalHours[$i] == 3)
         //         {
-        //             $dailyHours[] = 300;  
+        //             $dailyHours[] = 300;
         //         }
         //     elseif($meetings[$i] == 2 && $totalHours[$i] == 3)
         //         {
         //             $dailyHours[] = 150;
-        //             $dailyHours[] = 150;   
+        //             $dailyHours[] = 150;
         //         }
         //     elseif($meetings[$i] == 3 && $totalHours[$i] == 3)
         //         {
         //             $dailyHours[] = 100;
         //             $dailyHours[] = 100;
-        //             $dailyHours[] = 100;   
+        //             $dailyHours[] = 100;
         //         }
         //     elseif($meetings[$i] == 1 && $totalHours[$i] == 4)
         //         {
@@ -127,7 +129,7 @@ class GreedyAlgorithmController extends Controller
         //             $dailyHours[] = 200;
         //         }
 
-            
+
 
 
         //     //meeting loop
@@ -147,12 +149,12 @@ class GreedyAlgorithmController extends Controller
         //                 break;
         //             }
         //        }
-    
+
         //         //if initsched is empty
         //         if(empty($initSched))
         //         {
         //             //day loop
-        //             for($day = 1;$day < 7; $day++) 
+        //             for($day = 1;$day < 7; $day++)
         //             {
         //                 //get all the available days of the teacher
         //                 $selectedDay = AvailableTime::where('teacher_id',$teacherId)
@@ -164,11 +166,11 @@ class GreedyAlgorithmController extends Controller
         //                 {
         //                 //adds n mnumber of hours to the time start based on the number of meetings per week
 
-                        
+
         //             //time loop
         //                 for ($k = 0 ; $k < count($timeStart);$k++)
         //                     {
-                           
+
         //                         if(substr($timeStart[$k],-2) == 30 && $dailyHours[$j] == 150)
         //                         {
         //                             $timeFinish = $timeStart[$k] + 170;
@@ -196,7 +198,7 @@ class GreedyAlgorithmController extends Controller
         //                         ->where('deleted_at',null)
         //                         ->where('teacher_id',$teacherId)
         //                         ->first();
-                                
+
         //                         $teacherSchedules = Schedule::where('teacher_id',$teacherId)
         //                         ->where('day_of_week',$selectedDay)
         //                         ->get();
@@ -205,20 +207,20 @@ class GreedyAlgorithmController extends Controller
         //                         if($timeStart[$k] >= $availableTimes->time_start && $timeFinish <= $availableTimes->time_finish && isset($teacherSchedules))
         //                         {
         //                                 $conflict = 0;
-                                     
+
         //                                     foreach($teacherSchedules as $schedule)
         //                                     {
         //                                     if($timeStart[$k] >= $schedule->time_start || $timeFinish <= $schedule->time_finish)
         //                                         {
         //                                             $conflict = 1;
         //                                         }
-        //                                     }   
+        //                                     }
 
         //                                 if($conflict == 0)
         //                                 {
-                                            
+
         //                                     $selectedTime = $timeStart[$k].' - '.$timeFinish;
-                                                
+
 
         //                                     $rooms = Room::where('room_type_id',$roomType)
         //                                     ->where('deleted_at',null)
@@ -231,7 +233,7 @@ class GreedyAlgorithmController extends Controller
         //                                         {
 
         //                                             $selectedRoom = $room->id;
-                                                    
+
         //                                             $conflict = 0;
         //                                             foreach($teacherSchedules as $schedule)
         //                                             {
@@ -241,7 +243,7 @@ class GreedyAlgorithmController extends Controller
         //                                                     }
         //                                             }
 
-                                                    
+
         //                                             $roomSchedules = Schedule::where('day_of_week',$selectedDay->available_day)
         //                                             ->where('room_id',$room->id)
         //                                             ->where('deleted_at',null)
@@ -262,7 +264,7 @@ class GreedyAlgorithmController extends Controller
         //                                                 ->where('title',$courses[$i])
         //                                                 ->where('deleted_at',null)
         //                                                 ->first();
-                                                        
+
         //                                                 $initCourseSched = [
         //                                                     'academic_year_id' => $aY,
         //                                                     'semester' => 1,
@@ -278,7 +280,7 @@ class GreedyAlgorithmController extends Controller
 
         //                                                 $initProgSched[] = $initCourseSched;
         //                                                 $initSched = json_encode($initProgSched);
-                                                        
+
         //                                                 $loopControl = 1;
         //                                             }
 
@@ -308,7 +310,7 @@ class GreedyAlgorithmController extends Controller
         //                         {
         //                             break;
         //                         }
-       
+
         //                         }
 
         //                 }
@@ -320,7 +322,7 @@ class GreedyAlgorithmController extends Controller
         //        }
         //        else
         //        {
-        //         for($day = 1;$day <= 6; $day++) 
+        //         for($day = 1;$day <= 6; $day++)
         //         {
         //             //get all the available days of the teacher
         //             $selectedDay = AvailableTime::where('teacher_id',$teacherId)
@@ -338,12 +340,12 @@ class GreedyAlgorithmController extends Controller
         //                     {
         //                         $tooManyMeeting = 1;
         //                     }
-                     
+
         //                 }
-    
+
         //                 if($tooManyMeeting == 0)
         //                 {
-        
+
         //                     for ($k = 0 ; $k < count($timeStart);$k++)
         //                         {
         //                             if(substr($timeStart[$k],-2) == 30 && $dailyHours[$j] == 150)
@@ -366,15 +368,15 @@ class GreedyAlgorithmController extends Controller
         //                             {
         //                                 $timeFinish = $timeStart[$k] + $dailyHours[$j];
         //                             }
-        
-        
+
+
         //                             //selects * available time of teacher with the selected day
         //                             $availableTimes = AvailableTime::select('time_start','time_finish')
         //                             ->where('available_day',$selectedDay['available_day'])
         //                             ->where('deleted_at',null)
         //                             ->where('teacher_id',$teacherId)
         //                             ->first();
-                                    
+
         //                             $teacherSchedules = Schedule::where('teacher_id',$teacherId)
         //                             ->where('day_of_week',$selectedDay)
         //                             ->get();
@@ -389,12 +391,12 @@ class GreedyAlgorithmController extends Controller
         //                                                 $conflict = 1;
         //                                             }
         //                                         }
-        
+
         //                                         for($y = 0;$y < count($initProgSched);$y++)
         //                                         {
-        //                                             if($teacherId == $initProgSched[$y]['teacher_id'] && 
-        //                                             $selectedDay->available_day == $initProgSched[$y]['day_of_week'] && 
-        //                                             $timeStart[$k] >= $initProgSched[$y]['time_start'] && 
+        //                                             if($teacherId == $initProgSched[$y]['teacher_id'] &&
+        //                                             $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
+        //                                             $timeStart[$k] >= $initProgSched[$y]['time_start'] &&
         //                                             $timeStart[$k] <= $initProgSched[$y]['time_finish']
         //                                         )
         //                                             {
@@ -404,8 +406,8 @@ class GreedyAlgorithmController extends Controller
 
         //                                         for($y = 0;$y < count($initProgSched);$y++)
         //                                         {
-        //                                             if($teacherId == $initProgSched[$y]['teacher_id'] && 
-        //                                             $selectedDay->available_day == $initProgSched[$y]['day_of_week'] && 
+        //                                             if($teacherId == $initProgSched[$y]['teacher_id'] &&
+        //                                             $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
         //                                             $timeFinish >= $initProgSched[$y]['time_start'] &&
         //                                             $timeFinish <= $initProgSched[$y]['time_finish']
         //                                         )
@@ -418,10 +420,10 @@ class GreedyAlgorithmController extends Controller
         //                                         {
         //                                             $conflict = 1;
         //                                         }
-        
+
         //                                     if($conflict == 0)
-        //                                     {       
-        
+        //                                     {
+
         //                                          $rooms = Room::where('room_type_id',$roomType[$i])
         //                                          ->where('deleted_at',null)
         //                                          ->get();
@@ -431,37 +433,37 @@ class GreedyAlgorithmController extends Controller
         //                                          ->where('room_id',$roomType[$i])
         //                                          ->where('deleted_at',null)
         //                                          ->get();
-        
+
         //                                         //selecting the room
         //                                         foreach($rooms as $room)
         //                                         {
-        
+
         //                                         if ($timeStart[$k] >= $room->available_time_start && $timeFinish <= $room->available_time_finish )
         //                                             {
-        
+
         //                                                 $selectedRoom = $room->id;
-                                                        
+
         //                                                 $conflict = 0;
 
         //                                                 for($x = 0;$x < count($initProgSched);$x++)
         //                                                 {
-        //                                                     if($selectedRoom == $initProgSched[$x]['room_id'] && 
-        //                                                        $timeStart[$k] >= $initProgSched[$x]['time_start'] && 
+        //                                                     if($selectedRoom == $initProgSched[$x]['room_id'] &&
+        //                                                        $timeStart[$k] >= $initProgSched[$x]['time_start'] &&
         //                                                        $timeStart[$k] <= $initProgSched[$x]['time_finish'])
         //                                                     {
         //                                                         $conflict = 1;
         //                                                     }
 
-        //                                                     if($selectedRoom == $initProgSched[$x]['room_id'] && 
-        //                                                        $timeFinish >= $initProgSched[$x]['time_start'] && 
+        //                                                     if($selectedRoom == $initProgSched[$x]['room_id'] &&
+        //                                                        $timeFinish >= $initProgSched[$x]['time_start'] &&
         //                                                        $timeFinish <= $initProgSched[$x]['time_finish'])
         //                                                     {
         //                                                         $conflict = 1;
         //                                                     }
         //                                                 }
 
-                                                        
-                                                    
+
+
         //                                             $roomSchedules = Schedule::where('day_of_week',$selectedDay->available_day)
         //                                             ->where('room_id',$room->id)
         //                                             ->where('deleted_at',null)
@@ -475,15 +477,15 @@ class GreedyAlgorithmController extends Controller
         //                                                 }
         //                                             }
 
-        
+
         //                                                 if($conflict == 0)
         //                                                 {
-        
+
         //                                                     $course = Course::select('id')
         //                                                     ->where('title',$courses[$i])
         //                                                     ->where('deleted_at',null)
         //                                                     ->first();
-                                                            
+
         //                                                     $initCourseSched = [
         //                                                         'academic_year_id' => $academic_year,
         //                                                         'semester' => $semester,
@@ -496,16 +498,16 @@ class GreedyAlgorithmController extends Controller
         //                                                         'time_start' => $timeStart[$k],
         //                                                         'time_finish' => $timeFinish
         //                                                     ];
-        
-                                                           
+
+
         //                                                     $initProgSched[] = $initCourseSched;
         //                                                     $initSched = json_encode($initProgSched);
-                                                    
+
         //                                                     $loopControl = 1;
-                                                    
+
         //                                                 }
-        
-        
+
+
         //                                                 if($loopControl == 1)
         //                                                 {
         //                                                     break;
@@ -525,34 +527,34 @@ class GreedyAlgorithmController extends Controller
         //                                 {
         //                                     break;
         //                                 }
-        
-        
+
+
         //                             }
         //                             if($loopControl == 1)
         //                             {
         //                                 break;
         //                             }
-           
+
         //                            }
-                            
-        
-                            
+
+
+
         //                     if($loopControl == 1)
         //                     {
         //                         break;
         //                     }
-       
+
         //                 }
         //             }
-        //         }//day with json                        
- 
+        //         }//day with json
+
         //        }//with json
         //     }//meeting
 
         // }//course
         // $sched = json_decode($initSched,true);
         // $queueCount = count($sched);
-        
+
         // for($entry = 0;$entry < $queueCount;$entry++)
         // {
 

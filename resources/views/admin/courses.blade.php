@@ -27,8 +27,8 @@
                                         {{$course->description}}
                                     </td>
                                     <td>
-                                        <button class="btn btn-warning btn-detail open_modal" data-target="#EditCourse" data-toggle="modal" value="{{ $course->id }}">Edit</button>
-                                        <button class="btn btn-danger btn-delete delete-product" data-target="#DeleteCourse" data-toggle="modal" value="{{ $course->id }}">Delete</button>
+                                        <button class="btn btn-warning btn-detail open_modal" data-target="#EditCourse{{ $course->id }}" data-toggle="modal" value="{{ $course->id }}">Edit</button>
+                                        <button class="btn btn-danger btn-delete delete-product" data-target="#DeleteCourse{{ $course->id }}" data-toggle="modal" value="{{ $course->id }}">Delete</button>
                                   
                                     </td>
                                 </tr>
@@ -38,7 +38,7 @@
 
         <!-- DELETE MODAL SECTION --> 
 @foreach ($courses as $course)
-        <div class="modal fade show" id="DeleteCourse" tabindex="-1" role="dialog" aria-labelledby="">
+        <div class="modal fade show" id="DeleteCourse{{ $course->id }}" tabindex="-1" role="dialog" aria-labelledby="">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -60,7 +60,7 @@
 
         <!-- EDIT MODAL SECTION --> 
     @foreach ($courses as $course)
-        <div class="modal fade show" id="EditCourse" tabindex="-1" role="dialog" aria-labelledby="">
+        <div class="modal fade show" id="EditCourse{{ $course->id }}" tabindex="-1" role="dialog" aria-labelledby="">
             <div class="modal-dialog modal-lg" role="document">
                 <form  method="POST" action="/editcourse/{{$course->id}}">
                     {{ csrf_field() }}

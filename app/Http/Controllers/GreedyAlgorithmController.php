@@ -210,7 +210,8 @@ class GreedyAlgorithmController extends Controller
                                 ->first();
 
                                 $teacherSchedules = Schedule::where('teacher_id',$teacherId)
-                                ->where('day_of_week',$selectedDay)
+                                ->where('day_of_week',$selectedDay->available_day)
+                                ->where('semester',$semester)
                                 ->get();
 
                                     //compares the current timestart and time finish if they are within the teachers time availability
@@ -220,7 +221,7 @@ class GreedyAlgorithmController extends Controller
 
                                             foreach($teacherSchedules as $schedule)
                                             {
-                                            if($timeStart[$k] >= $schedule->time_start || $timeFinish <= $schedule->time_finish)
+                                                if($timeStart[$k] >= $schedule->time_start && $timeStart[$k] <= $schedule->time_finish || $timeFinish >= $schedule->time_start && $timeFinish <= $schedule->time_finish)
                                                 {
                                                     $conflict = 1;
                                                 }
@@ -388,7 +389,8 @@ class GreedyAlgorithmController extends Controller
                                     ->first();
 
                                     $teacherSchedules = Schedule::where('teacher_id',$teacherId)
-                                    ->where('day_of_week',$selectedDay)
+                                    ->where('day_of_week',$selectedDay->available_day)
+                                    ->where('semester',$semester)
                                     ->get();
                                         //compares the current timestart and time finish if they are within the teachers time availability
                                     if($timeStart[$k] >= $availableTimes['time_start'] && $timeFinish <= $availableTimes['time_finish'])
@@ -583,8 +585,7 @@ class GreedyAlgorithmController extends Controller
                 $save->save();
 
         }
-        print($initSched);
-        // return $request->all();
+        print(json_encode($teacherSchedules));        // return $request->all();
 
     }//class
 

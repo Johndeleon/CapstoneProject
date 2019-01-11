@@ -154,7 +154,7 @@ class DatabaseSeeder extends Seeder
             }
 
             for ($z=1;$z<=30;$z++) {
-                $randtime = rand(0,11);
+                $randtime = rand(0,5);
     
 
             DB::table('rooms')->insert([

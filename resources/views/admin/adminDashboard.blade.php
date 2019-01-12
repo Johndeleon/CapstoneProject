@@ -15,173 +15,26 @@
 			<div class="row">
 				@if(count($programs))
 				<!-- SHOW PROGRAMS -->
+
+				@foreach($programs as $program)
 				<div class="col-md-4 mb-2">
 					<div class="card text-align">
 						<div class="card-body">
-							<h1>BSIS</h1>
+							<h2>{{$program->title}}</h2>
 						</div>
 
 						<div class="card-footer">
 							<div class="row ml-3 mr-3">
+							@for($i=1;$i<=$program->levels;$i++)
 								<div class="col-md-3">
-									<button class="btn btn-primary">1</button>
+									<a href="\{{$program->title}}{{$i}}"><div class="btn btn-primary">{{$i}}</div></a>
 								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">2</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">3</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">4</button>
-								</div>
+							@endfor
 							</div>
 						</div>
 					</div>
 				</div>
-
-				<div class="col-md-4 mb-2">
-					<div class="card text-align">
-						<div class="card-body">
-							<h1>ABB</h1>
-						</div>
-
-						<div class="card-footer">
-							<div class="row ml-3 mr-3">
-								<div class="col-md-3">
-									<button class="btn btn-primary">1</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">2</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">3</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">4</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4 mb-2">
-					<div class="card text-align">
-						<div class="card-body">
-							<h1>BSAT</h1>
-						</div>
-
-						<div class="card-footer">
-							<div class="row ml-3 mr-3">
-								<div class="col-md-3">
-									<button class="btn btn-primary">1</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">2</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">3</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">4</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4 mb-2">
-					<div class="card text-align">
-						<div class="card-body">
-							<h1>ACT</h1>
-						</div>
-
-						<div class="card-footer">
-							<div class="row ml-3 mr-3">
-								<div class="col-md-3">
-									<button class="btn btn-primary">1</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">2</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">3</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">4</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4 mb-2">
-					<div class="card text-align">
-						<div class="card-body">
-							<h1>IC</h1>
-						</div>
-
-						<div class="card-footer">
-							<div class="row ml-3 mr-3">
-								<div class="col-md-3">
-									<button class="btn btn-primary">1</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">2</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">3</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">4</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4 mb-2">
-					<div class="card text-align">
-						<div class="card-body">
-							<h1>BSA</h1>
-						</div>
-
-						<div class="card-footer">
-							<div class="row ml-3 mr-3">
-								<div class="col-md-3">
-									<button class="btn btn-primary">1</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">2</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">3</button>
-								</div>
-
-								<div class="col-md-3">
-									<button class="btn btn-primary">4</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				@endforeach
 
 
 				@else

@@ -46,11 +46,6 @@ public function showPrograms()
 
     $accessLevel = $access_level[0];
 
-    // $programs = Program::select('id','title','description','levels')
-    //                     ->where('program_category_id',5)
-    //                     ->where('deleted_at',null)
-    //                     ->get();
-
     $programs = Program::all()
     ->where('deleted_at',null)
     ->sortByDesc('created_at');
@@ -79,14 +74,6 @@ public function showProgram($title, $i)
 
 public function addProgram(Request $request)
 {
-    /* ACADEMIC YEAR WITH THIS FORMAT
-    * $date = Carbon::now();
-    * $year = $date->year;
-    *
-    * $academicYear = AcademicYear::select('id')
-    *                            ->where('starts_at',Carbon::parse('01/01/'.$year))
-    *                            ->first();
-    */
 
     $program= new Program();
     $program->title = $request->title;
@@ -402,9 +389,6 @@ $teacherCourses = TeacherCourse::where('teacher_courses.teacher_id',$id)
 ->join('courses','teacher_courses.course_id','=','courses.id')
 ->get();
 
-// $semesters = Semester::where('deleted_at',null)
-// ->join('academic_years','semesters.academic_year_id','=','academic_years.id')
-// ->get();
 
 $availableTimes = AvailableTime::where('teacher_id',$id)
 ->where('deleted_at',null)
@@ -592,7 +576,8 @@ return redirect('admin/rooms');
 
   public function getDashboard() {
       $academicYears = AcademicYear::all()->sortByDesc('created_at');
-      $programs = Program::all();
+      $programs = Program::where('deleted_at',null)
+      ->get();
 
       $user = Auth::id();
       $access_level = User::select('access_level')

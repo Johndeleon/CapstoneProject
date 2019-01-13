@@ -9,6 +9,7 @@ use App\User;
 use DB;
 use Carbon\Carbon;
 use App\Room;
+use App\RoomType;
 use App\AvailableTime;
 use App\Schedule;
 use App\Course;
@@ -52,21 +53,6 @@ class GreedyAlgorithmController extends Controller
 
         $timeStart = [630,700,730,800,830,900,930,1000,1030,1100,1130,1200,1230,1300,1330,1400,1430,1500,1530,1600,1630,1700,1730,1800,1830,1900];
         $initProgSched = array();
-
-
-            print_r($courses);
-            print('<br>');
-            print_r($meetings);
-            print('<br>');
-            print_r($totalHours);
-            print('<br>');
-            print_r($teachers);
-            print('<br>');
-            print_r($numCourses);
-            print('<br>');
-            print_r($roomType);
-            print('<br>');
-            print('<br>');
 
 
         //course loop
@@ -166,7 +152,7 @@ class GreedyAlgorithmController extends Controller
                     //day loop
                     for($day = 1;$day < 7; $day++)
                     {
-                        //get all the available days of the teacher
+                        //check if $day is available
                         $selectedDay = AvailableTime::where('teacher_id',$teacherId)
                         ->where('available_day',$day)
                         ->where('deleted_at',null)
@@ -174,8 +160,6 @@ class GreedyAlgorithmController extends Controller
 
                         if($selectedDay != null)
                         {
-                        //adds n mnumber of hours to the time start based on the number of meetings per week
-
 
                     //time loop
                         for ($k = 0 ; $k < count($timeStart);$k++)
@@ -212,10 +196,11 @@ class GreedyAlgorithmController extends Controller
                                 $teacherSchedules = Schedule::where('teacher_id',$teacherId)
                                 ->where('day_of_week',$selectedDay->available_day)
                                 ->where('semester',$semester)
+                                ->where('academic_year_id',$aY_id)
                                 ->get();
 
                                     //compares the current timestart and time finish if they are within the teachers time availability
-                                if($timeStart[$k] >= $availableTimes->time_start && $timeFinish <= $availableTimes->time_finish && isset($teacherSchedules))
+                                if($timeStart[$k] >= $availableTimes->time_start && $timeStart[$k] <= $availableTimes->time_finish && $timeFinish >= $availableTimes->time_start && $timeFinish <= $availableTimes->time_finish && isset($teacherSchedules))
                                 {
                                         $conflict = 0;
 
@@ -390,12 +375,17 @@ class GreedyAlgorithmController extends Controller
 
                                     $teacherSchedules = Schedule::where('teacher_id',$teacherId)
                                     ->where('day_of_week',$selectedDay->available_day)
+                                    ->where('academic_year_id',$aY_id)
                                     ->where('semester',$semester)
                                     ->get();
+
                                         //compares the current timestart and time finish if they are within the teachers time availability
-                                    if($timeStart[$k] >= $availableTimes['time_start'] && $timeFinish <= $availableTimes['time_finish'])
+                                    if($timeStart[$k] >= $availableTimes['time_start'] && $timeStart[$k] <= $availableTimes['time_finish'] && $timeFinish >= $availableTimes['time_start'] && $timeFinish <= $availableTimes['time_finish'])
                                     {
                                             $conflict = 0;
+
+                                            if($teacherSchedules != null)
+                                            {
                                                 foreach($teacherSchedules as $schedule)
                                                 {
                                                 if($timeStart[$k] >= $schedule->time_start && $timeStart[$k] <= $schedule->time_finish || $timeFinish >= $schedule->time_start && $timeFinish <= $schedule->time_finish)
@@ -403,13 +393,14 @@ class GreedyAlgorithmController extends Controller
                                                         $conflict = 1;
                                                     }
                                                 }
-
+                                            }
                                                 for($y = 0;$y < count($initProgSched);$y++)
                                                 {
-                                                    if($teacherId == $initProgSched[$y]['teacher_id'] &&
+                                                    if(
                                                     $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
                                                     $timeStart[$k] >= $initProgSched[$y]['time_start'] &&
                                                     $timeStart[$k] <= $initProgSched[$y]['time_finish']
+                                                    
                                                 )
                                                     {
                                                         $conflict = 1;
@@ -418,7 +409,7 @@ class GreedyAlgorithmController extends Controller
 
                                                 for($y = 0;$y < count($initProgSched);$y++)
                                                 {
-                                                    if($teacherId == $initProgSched[$y]['teacher_id'] &&
+                                                    if(
                                                     $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
                                                     $timeFinish >= $initProgSched[$y]['time_start'] &&
                                                     $timeFinish <= $initProgSched[$y]['time_finish']
@@ -428,7 +419,7 @@ class GreedyAlgorithmController extends Controller
                                                     }
                                                 }
 
-                                                if($timeFinish > 1800)
+                                                if($timeFinish > 2000)
                                                 {
                                                     $conflict = 1;
                                                 }

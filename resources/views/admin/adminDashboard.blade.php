@@ -27,7 +27,7 @@
 							<div class="row ml-3 mr-3">
 							@for($i=1;$i<=$program->levels;$i++)
 								<div class="col-md-3">
-									<a href="\{{$program->title}}{{$i}}"><div class="btn btn-primary">{{$i}}</div></a>
+									<a href="{{$program->title}}{{$i}}"><button class="btn btn-primary" {{$hasSchedule[$program->id][$i]}}>{{$i}}</button>
 								</div>
 							@endfor
 							</div>
@@ -167,6 +167,7 @@
 			$('#date-autofill').val(add);
 			merge = input + ' - ' + add;
 		});
+		
 
 	});
 </script>

@@ -7,6 +7,7 @@ use App\TeacherCourse;
 use App\Teacher;
 use App\Room;
 use App\Semester;
+use App\Schedule;
 use App\RoomType;
 use App\CourseCategory;
 use Carbon\Carbon;
@@ -579,6 +580,26 @@ return redirect('admin/rooms');
       $programs = Program::where('deleted_at',null)
       ->get();
 
+      $hasSchedule = [];
+      foreach($programs as $program)
+      {
+        for($i=1;$i<=$program->levels;$i++)
+        {
+            $isPresent = Schedule::where('program_id',$program->id)
+            ->where('level',$i)
+            ->count();
+  
+            if($isPresent != 0)
+            {
+                $hasSchedule[$program->id][$i] = 'enabled';
+            }
+            else
+            {
+                $hasSchedule[$program->id][$i] = 'disabled';
+            }
+        }
+      }
+
       $user = Auth::id();
       $access_level = User::select('access_level')
       ->where('id',$user)
@@ -603,7 +624,8 @@ return redirect('admin/rooms');
       return view('admin.adminDashboard')->with('academicYears', $academicYears)
                                         ->with('programs', $programs)
                                         ->with('accessLevel', $accessLevel)
-                                        ->with('sidebar', $sidebar);
+                                        ->with('sidebar', $sidebar)
+                                        ->with('hasSchedule',$hasSchedule);
   }
 
   public function getCommentsAttribute()

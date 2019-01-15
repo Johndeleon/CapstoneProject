@@ -39,15 +39,58 @@ class GreedyAlgorithmController extends Controller
         $aY_id = $aY_id[0];
 
         $semester = $request->semester;
-        $courses = $request->courses;
-        $teachers = $request->teachers;
-        $totalHours = $request->total_hours;
-        $meetings = $request->meeting;
+        $inputCourses = $request->courses;
+        $inputTeachers = $request->teachers;
+        $inputTotalHours = $request->total_hours;
+        $inputMeetings = $request->meeting;
 
         // return $request->all();
 
-        $numCourses = count($courses);
-   
+        $numCourses = count($inputCourses);
+        $availableDayPerTeacher = [];
+        $keyArrangement = [];
+        $teachers = [];
+
+
+        for($i= 0 ; $i< $numCourses; $i++)
+        {
+            $count = AvailableTime::where('teacher_id',$inputTeachers[$i])
+            ->where('deleted_at',null)
+            ->count();
+            $availableDayPerTeacher[$inputTeachers[$i]] = $count;
+        }
+        asort($availableDayPerTeacher);
+        
+        foreach($availableDayPerTeacher as $key => $value)
+        {
+            $teachers[]= $key;
+        }
+
+        for($i=0;$i<$numCourses;$i++)
+        {
+            $toSearch = $teachers[$i];
+            $keyArrangement[]= array_search($toSearch,$inputTeachers);
+        }
+
+        for($i=0;$i<$numCourses;$i++)
+        {
+            $toSearch = $keyArrangement[$i];
+            $courses[$i] = $inputCourses[$toSearch];
+        }
+
+        for($i=0;$i<$numCourses;$i++)
+        {
+            $toSearch = $keyArrangement[$i];
+            $meetings[$i] = $inputMeetings[$toSearch];
+        }
+
+        for($i=0;$i<$numCourses;$i++)
+        {
+            $toSearch = $keyArrangement[$i];
+            $totalHours[$i] = $inputTotalHours[$toSearch];
+        }
+        
+
 
         $days_of_week = ['monday','tuesday','wendesday','thursday','friday','saturday'];
 
@@ -240,11 +283,6 @@ class GreedyAlgorithmController extends Controller
                                                     if($conflict == 0)
                                                     {
 
-                                                        $course = Course::select('id')
-                                                        ->where('title',$courses[$i])
-                                                        ->where('deleted_at',null)
-                                                        ->first();
-
                                                         $initCourseSched = [
                                                             'academic_year_id' => $aY_id,
                                                             'semester' => 1,
@@ -316,7 +354,7 @@ class GreedyAlgorithmController extends Controller
 
                         for($z=0;$z<count($initProgSched);$z++)
                         {
-                            if($course == $initProgSched[$z]['course_id'] && $selectedDay['available_day'] == $initProgSched[$z]['day_of_week'])
+                            if($courses[$i] == $initProgSched[$z]['course_id'] && $selectedDay['available_day'] == $initProgSched[$z]['day_of_week'])
                             {
                                 $tooManyMeeting = 1;
                             }
@@ -468,11 +506,6 @@ class GreedyAlgorithmController extends Controller
                                                         if($conflict == 0)
                                                         {
 
-                                                            $course = Course::select('id')
-                                                            ->where('title',$courses[$i])
-                                                            ->where('deleted_at',null)
-                                                            ->first();
-
                                                             $initCourseSched = [
                                                                 'academic_year_id' => $aY_id,
                                                                 'semester' => $semester,
@@ -564,7 +597,15 @@ class GreedyAlgorithmController extends Controller
                 $save->save();
 
         }
-        print(json_encode($teacherSchedules));        // return $request->all();
+        print_r($keyArrangement);
+        print_r($teachers);
+        print_r($meetings);
+        print_r($totalHours);
+        print_r($courses);
+
+
+     
+        // return $request->all();
 
     }//class
 

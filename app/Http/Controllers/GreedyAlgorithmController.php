@@ -60,7 +60,7 @@ class GreedyAlgorithmController extends Controller
             $availableDayPerTeacher[$inputTeachers[$i]] = $count;
         }
         asort($availableDayPerTeacher);
-        
+
         foreach($availableDayPerTeacher as $key => $value)
         {
             $teachers[]= $key;
@@ -89,7 +89,7 @@ class GreedyAlgorithmController extends Controller
             $toSearch = $keyArrangement[$i];
             $totalHours[$i] = $inputTotalHours[$toSearch];
         }
-        
+
 
 
         $days_of_week = ['monday','tuesday','wendesday','thursday','friday','saturday'];
@@ -172,7 +172,7 @@ class GreedyAlgorithmController extends Controller
             for($j = 0; $j < $meetings[$i]; $j++)
             {
                 $loopControl = 0;
-                
+
                 //if initsched is empty
                 if(empty($initSched))
                 {
@@ -422,7 +422,7 @@ class GreedyAlgorithmController extends Controller
                                                     $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
                                                     $timeStart[$k] >= $initProgSched[$y]['time_start'] &&
                                                     $timeStart[$k] <= $initProgSched[$y]['time_finish']
-                                                    
+
                                                 )
                                                     {
                                                         $conflict = 1;
@@ -565,7 +565,7 @@ class GreedyAlgorithmController extends Controller
                             }
 
                         }
-                    }//a day matched with teachers availbility  
+                    }//a day matched with teachers availbility
                     if($loopControl == 0 && $day == 6)
                     {
 
@@ -597,14 +597,16 @@ class GreedyAlgorithmController extends Controller
                 $save->save();
 
         }
-        print_r($keyArrangement);
-        print_r($teachers);
-        print_r($meetings);
-        print_r($totalHours);
-        print_r($courses);
+        // print_r($keyArrangement);
+        // print_r($teachers);
+        // print_r($meetings);
+        // print_r($totalHours);
+        // print_r($courses);
+
+        return json_encode($initSched);
 
 
-     
+
         // return $request->all();
 
     }//class

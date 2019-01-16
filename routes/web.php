@@ -136,4 +136,4 @@ Route::post('/generate', 'GreedyAlgorithmController@generateSchedule')->name('ge
 /**  FOR CUZTOMIZATION PAGE */
 Route::get('/admin/customize-schedules', 'HomeController@getCuztomizePage')->name('getCuztomizePage');
 
-Route::post('/postIds', 'HomeController@postIds')->name('postIds');
+Route::post('/getRealData', 'HomeController@getRealData')->name('getRealData');

@@ -411,7 +411,7 @@
           '_token': $('input[name=_token]').val()
         }
         , function(data, status){
-            console.log(data);
+            // console.log(data);
 
             window.localStorage['programs'] = data;
             window.open('/admin/customize-schedules');

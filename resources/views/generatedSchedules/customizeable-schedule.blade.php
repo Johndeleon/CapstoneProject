@@ -1,11 +1,11 @@
 @extends('layouts.app1')
 
 @section('head')
-    
+
 @endsection
 
 @section('title')
-    
+
 @endsection
 
 @section('body')
@@ -15,7 +15,7 @@
             <div class="card col-md-12 mx-auto mb-3">
                 <div class="row">
 
-                    
+
                     <div class="col-md-2 card rounded-0">
 
                         <div class="card-header text-center">
@@ -24,7 +24,7 @@
 
                         <div id="monday" class="row pt-3">
 
-                                
+
 
                         </div>
                     </div>
@@ -36,7 +36,7 @@
 
                         <div id="tuesday" class="row pt-3">
 
-                                
+
 
                         </div>
                     </div>
@@ -48,7 +48,7 @@
 
                         <div id="wednesday" class="row pt-3">
 
-                                
+
 
                         </div>
                     </div>
@@ -60,7 +60,7 @@
 
                         <div id="thursday" class="row pt-3">
 
-                                
+
 
                         </div>
                     </div>
@@ -72,7 +72,7 @@
 
                         <div id="friday" class="row pt-3">
 
-                                
+
 
                         </div>
                     </div>
@@ -84,7 +84,7 @@
 
                         <div id="saturday" class="row pt-3">
 
-                                
+
 
                         </div>
                     </div>
@@ -92,7 +92,7 @@
 
                 </div>
 
-                    
+
 
                     {{-- <div class="table-responsive">
                         <table class="table table-hover table-bordered">
@@ -106,7 +106,7 @@
                                     <th width="16.66">Saturday</th>
                                 </tr>
                             </thead>
-    
+
                             <tbody>
                                 <tr>
                                     <td id="monday"></td>
@@ -131,149 +131,150 @@
 
     <script>
         var data = window.localStorage["programs"];
-        
-        // data['aYId', 'ProgramId', 'semester']
-        
-        
 
         $(document).ready(function() {
-            $.post('/postIds', {
+          data = $.parseJSON(data);
 
-                academicID: data[0],
-                programID: data[2],
-                semester: data[4],
-                '_token': $('input[name=_token]').val()
+
+          data.forEach(function(item) {
+            console.log(item);
+            var time = item.time_start + ' - ' + item.time_finish;
+
+            $.post('/getRealData', {
+
+                teacher:  item.teacher_id,
+                room:     item.room_id,
+                ay:       item.academic_year_id,
+                program:  item.program_id,
+                semester: item.semester,
+                course:   item.course_id,
+                '_token': $('input[name=_token]').val(),
 
             }, function(data, status) {
 
-                // console.log(data);
+                if (item.day_of_week == 1) { // Monday
+                    var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
+                                            '<div class="card-body text-center" style="font-size: 13px">'+
+                                                '<div> <b>'+ data.names.course +'</b> </div>'+
+                                                '<div>'+ data.names.teacher +'</div>'+
+                                                '<div>'+ time +'</div>'+
+                                                '<div>'+ data.names.room +'</div>'+
+                                            '</div>'+
+                                        '</div>';
 
-                data.forEach (function (item) {
-                    if (item['day'] == 1) { // Monday
-                        var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
-                                                '<div class="card-body text-center" style="font-size: 13px">'+
-                                                    '<div> <b>'+ item['subject'] +'</b> </div>'+
-                                                    '<div>'+ item['teacher'] +'</div>'+
-                                                    '<div>'+ item['time'] +'</div>'+
-                                                    '<div>'+ item['room'] +'</div>'+
-                                                '</div>'+
-                                            '</div>';
+                    $('#monday').append(subjectWrapper);
+                }
+                else if (item.day_of_week == 2) {
+                    var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
+                                            '<div class="card-body text-center" style="font-size: 13px">'+
+                                                '<div> <b>'+ data.names.course +'</b> </div>'+
+                                                '<div>'+ data.names.teacher +'</div>'+
+                                                '<div>'+ time +'</div>'+
+                                                '<div>'+ data.names.room +'</div>'+
+                                            '</div>'+
+                                        '</div>';
 
-                        $('#monday').append(subjectWrapper);
-                    }
-                    else if (item['day'] == 2) {
-                        var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
-                                                '<div class="card-body text-center" style="font-size: 13px">'+
-                                                    '<div> <b>'+ item['subject'] +'</b> </div>'+
-                                                    '<div>'+ item['teacher'] +'</div>'+
-                                                    '<div>'+ item['time'] +'</div>'+
-                                                    '<div>'+ item['room'] +'</div>'+
-                                                '</div>'+
-                                            '</div>';
+                    $('#tuesday').append(subjectWrapper);
+                }
+                else if (item.day_of_week == 3) {
+                    var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
+                                            '<div class="card-body text-center" style="font-size: 13px">'+
+                                                '<div> <b>'+ data.names.course +'</b> </div>'+
+                                                '<div>'+ data.names.teacher +'</div>'+
+                                                '<div>'+ time +'</div>'+
+                                                '<div>'+ data.names.room +'</div>'+
+                                            '</div>'+
+                                        '</div>';
 
-                        $('#tuesday').append(subjectWrapper);
-                    }
-                    else if (item['day'] == 3) {
-                        var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
-                                                '<div class="card-body text-center" style="font-size: 13px">'+
-                                                    '<div> <b>'+ item['subject'] +'</b> </div>'+
-                                                    '<div>'+ item['teacher'] +'</div>'+
-                                                    '<div>'+ item['time'] +'</div>'+
-                                                    '<div>'+ item['room'] +'</div>'+
-                                                '</div>'+
-                                            '</div>';
+                    $('#wednesday').append(subjectWrapper);
+                }
+                else if (item.day_of_week == 4) {
+                    var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
+                                            '<div class="card-body text-center" style="font-size: 13px">'+
+                                                '<div> <b>'+ data.names.course +'</b> </div>'+
+                                                '<div>'+ data.names.teacher +'</div>'+
+                                                '<div>'+ time +'</div>'+
+                                                '<div>'+ data.names.room +'</div>'+
+                                            '</div>'+
+                                        '</div>';
 
-                        $('#wednesday').append(subjectWrapper);
-                    }
-                    else if (item['day'] == 4) {
-                        var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
-                                                '<div class="card-body text-center" style="font-size: 13px">'+
-                                                    '<div> <b>'+ item['subject'] +'</b> </div>'+
-                                                    '<div>'+ item['teacher'] +'</div>'+
-                                                    '<div>'+ item['time'] +'</div>'+
-                                                    '<div>'+ item['room'] +'</div>'+
-                                                '</div>'+
-                                            '</div>';
+                    $('#thursday').append(subjectWrapper);
+                }
+                else if (item.day_of_week == 5) {
+                    var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
+                                            '<div class="card-body text-center" style="font-size: 13px">'+
+                                                '<div> <b>'+ data.names.course +'</b> </div>'+
+                                                '<div>'+ data.names.teacher +'</div>'+
+                                                '<div>'+ time +'</div>'+
+                                                '<div>'+ data.names.room +'</div>'+
+                                            '</div>'+
+                                        '</div>';
 
-                        $('#thursday').append(subjectWrapper);
-                    }
-                    else if (item['day'] == 5) {
-                        var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
-                                                '<div class="card-body text-center" style="font-size: 13px">'+
-                                                    '<div> <b>'+ item['subject'] +'</b> </div>'+
-                                                    '<div>'+ item['teacher'] +'</div>'+
-                                                    '<div>'+ item['time'] +'</div>'+
-                                                    '<div>'+ item['room'] +'</div>'+
-                                                '</div>'+
-                                            '</div>';
+                    $('#friday').append(subjectWrapper);
+                }
+                else if (item.day_of_week == 6) {
+                    var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
+                                            '<div class="card-body text-center" style="font-size: 13px">'+
+                                                '<div> <b>'+ data.names.course +'</b> </div>'+
+                                                '<div>'+ data.names.teacher +'</div>'+
+                                                '<div>'+ time +'</div>'+
+                                                '<div>'+ data.names.room +'</div>'+
+                                            '</div>'+
+                                        '</div>';
 
-                        $('#friday').append(subjectWrapper);
-                    }
-                    else if (item['day'] == 6) {
-                        var subjectWrapper = '<div class="card col-md-12 border-left-0 border-right-0 rounded-0 bg-light" style="min-height: 140px">'+
-                                                '<div class="card-body text-center" style="font-size: 13px">'+
-                                                    '<div> <b>'+ item['subject'] +'</b> </div>'+
-                                                    '<div>'+ item['teacher'] +'</div>'+
-                                                    '<div>'+ item['time'] +'</div>'+
-                                                    '<div>'+ item['room'] +'</div>'+
-                                                '</div>'+
-                                            '</div>';
+                    $('#saturday').append(subjectWrapper);
+                }
 
-                        $('#saturday').append(subjectWrapper);
-                    }
-                });
-                
-                
-                // data.forEach(function (element) {
-                //     var subjectWrapper = '<div class="card mb-2" style="width: auto;">'+
-                //                             '<div class="card-body text-center">'+
-                //                                 '<div> <b>'+ element['subject'] +'</b> </div>'+
-                //                                 '<div>'+ element['teacher'] +'</div>'+
-                //                                 '<div>'+ element['time'] +'</div>'+
-                //                                 '<div>'+ element['room'] +'</div>'+
-                //                             '</div>'
-                //                        '</div>';
+                  $days = [
+                      '#monday', '#tuesday', '#wednesday', '#thursday', '#friday', '#saturday'
+                  ];
 
-                //     $('#monday').append(subjectWrapper);
-                    
-                    
-                // });
+                  $monday = [
+                      '#tuesday', '#wednesday', '#thursday', '#friday', '#saturday'
+                  ];
+                  $tuesday = [
+                      '#monday', '#wednesday', '#thursday', '#friday', '#saturday'
+                  ];
+                  $wednesday = [
+                      '#monday', '#tuesday', '#thursday', '#friday', '#saturday'
+                  ];
+                  $thursday = [
+                      '#monday', '#tuesday', '#wednesday', '#friday', '#saturday'
+                  ];
+                  $friday = [
+                      '#monday', '#tuesday', '#wednesday', '#thursday', '#saturday'
+                  ];
+                  $saturday = [
+                      '#monday', '#tuesday', '#wednesday', '#thursday', '#friday'
+                  ];
+
+                  $('#monday').sortable({connectWith: $monday, dropOnEmpty: true});
+                  $('#tuesday').sortable({connectWith: $tuesday});
+                  $('#wednesday').sortable({connectWith: $wednesday});
+                  $('#thursday').sortable({connectWith: $thursday});
+                  $('#friday').sortable({connectWith: $friday});
+                  $('#saturday').sortable({connectWith: $saturday});
+
+
+            }); // POST FUNCTION
+          }); // END OF FOREACH
+
+          //
 
 
 
 
-            });
 
-            $days = [
-                '#monday', '#tuesday', '#wednesday', '#thursday', '#friday', '#saturday'
-            ];
 
-            $monday = [
-                '#tuesday', '#wednesday', '#thursday', '#friday', '#saturday'
-            ];
-            $tuesday = [
-                '#monday', '#wednesday', '#thursday', '#friday', '#saturday'
-            ];
-            $wednesday = [
-                '#monday', '#tuesday', '#thursday', '#friday', '#saturday'
-            ];
-            $thursday = [
-                '#monday', '#tuesday', '#wednesday', '#friday', '#saturday'
-            ];
-            $friday = [
-                '#monday', '#tuesday', '#wednesday', '#thursday', '#saturday'
-            ];
-            $saturday = [
-                '#monday', '#tuesday', '#wednesday', '#thursday', '#friday'
-            ];
 
-            $('#monday').sortable({connectWith: $monday, dropOnEmpty: true});
-            $('#tuesday').sortable({connectWith: $tuesday});
-            $('#wednesday').sortable({connectWith: $wednesday});
-            $('#thursday').sortable({connectWith: $thursday});
-            $('#friday').sortable({connectWith: $friday});
-            $('#saturday').sortable({connectWith: $saturday});
+
+
+
+
+
 
         });
+
+
     </script>
 @endsection

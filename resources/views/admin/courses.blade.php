@@ -1,22 +1,46 @@
 @extends('layouts.app1')
 
-@section('body')
+@section('head')
+    <style>
+        .blue {
+            background: blue;
+        }
+    </style>
+@endsection
 
-
+<<<<<<< Updated upstream
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Courses<button class="item btn  btn-info" data-toggle="modal" data-target="#addCourse">Add Course</button></div>
+=======
+@section('body')
+<div class="container-fluid blue">
+    <div class="row blue justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header bg-info"> <span style="margin-top: 3px"></span>
+                    <button class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addCourse">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add Courses
+                    </button>
+                </div>
+>>>>>>> Stashed changes
 
-                    <table class="table-bordered">
-                                <tr>
-                                    <th>Course Code</th>
-                                    <th>Course Name</th>
-                                    <th>Course Description</th>
-                                </tr>
-                        @foreach($courses as $course)
-                                <tr id="course{{$course->id}}" class="active">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%">Course Code</th>
+                                <th style="width: 15%">Course Name</th>
+                                <th style="width: 55%">Course Description</th>
+                                <th style="width: 12%">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($courses as $course)
+                                <tr id="course-{{$course->id}}" class="active">
                                     <td>
                                         <a href="course/{{$course->code}}">{{$course->code}}</a>
                                     </td> 
@@ -27,13 +51,51 @@
                                         {{$course->description}}
                                     </td>
                                     <td>
+<<<<<<< Updated upstream
                                         <button class="btn btn-warning btn-detail open_modal" data-target="#EditCourse{{ $course->id }}" data-toggle="modal" value="{{ $course->id }}">Edit</button>
                                         <button class="btn btn-danger btn-delete delete-product" data-target="#DeleteCourse{{ $course->id }}" data-toggle="modal" value="{{ $course->id }}">Delete</button>
                                   
+=======
+                                        <button class="item btn  btn-info" data-toggle="modal" role="Edit" title="Edit"     data-target="#EditCourse" value="{{ $course->id }}">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+
+                                        <button class="item btn  btn-danger" data-toggle="modal" role="Delete" title="Delete" data-target="#DeleteCourse" value="{{ $course->id }}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        {{-- <button class="btn btn-warning btn-detail open_modal" data-target="#EditCourse" data-toggle="modal" value="{{ $course->id }}">Edit</button>
+                                        <button class="btn btn-danger btn-delete delete-product" data-target="#DeleteCourse" data-toggle="modal" value="{{ $course->id }}">Delete</button> --}}
+                                
+>>>>>>> Stashed changes
                                     </td>
                                 </tr>
-                        @endforeach
+                            @endforeach
+                        </tbody>
                     </table>
+                </div> {{-- end of table-responsive --}}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+    {{-- <form name="add_name" id="add_name">  
+            <div class="alert alert-danger print-error-msg" style="display:none">
+            <ul></ul>
+            </div>
+            <div class="alert alert-success print-success-msg" style="display:none">
+            <ul></ul>
+            </div>
+            </form>  
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  --}}
 
 
         <!-- DELETE MODAL SECTION --> 
@@ -102,59 +164,38 @@
 
         <!-- ADD MODAL SECTION -->       
 <div class="modal fade show" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="">
-        <div class="modal-dialog modal-lg" role="document">
-            <form action="addcourse" method="post">
-                {{ csrf_field() }}
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">Create Course</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">                    
-                        <div class="table-responsive">  
-                        <table class="table table-bordered" id="dynamic_field">  
-                        <tr>  
-                            <td><input name="code[]" type="text" placeholder="Course Code" class="form-control" required></td>
-                        </tr>
-                        <tr>
-                            <td><input name="title[]" type="text" placeholder="Course Name" class="form-control" min=1 required></td>
-                        </tr>
-                        <tr>
-                            <td><textarea name="description[]" placeholder="Description" class="form-control" rows="3" required></textarea></td>
-                        </tr>
-                        <tr>
-                            <td><input name="units[]" type="number" placeholder="Units" class="form-control" min=1 required></td>
-                        </tr>
-                         
-                        </table>  
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
-                        <button type="submit" class="btn btn-info">Create</button>
-                    </div>
+    <div class="modal-dialog" role="document">
+        <form action="addcourse" method="post">
+            {{ csrf_field() }}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">Create Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
-            </form>
-        </div>
+
+                <div class="modal-body">
+                    <input name="code[]" type="text" placeholder="Course Code" class="form-control mb-2" required>
+
+                    <input name="title[]" type="text" placeholder="Course Name" class="form-control mb-2" min=1 required>
+
+                    <textarea name="description[]" placeholder="Description" class="form-control mb-2" rows="3" required></textarea>
+
+                    <input name="units[]" type="number" placeholder="Units" class="form-control mb-2" min=1 required>
+                    
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" name="add" id="add" class="btn btn-success">Add More</button> --}}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+                    <button type="submit" class="btn btn-info">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 {{-- FOR ERROR MESSAGE? --}}
-         <form name="add_name" id="add_name">  
-            <div class="alert alert-danger print-error-msg" style="display:none">
-            <ul></ul>
-            </div>
-            <div class="alert alert-success print-success-msg" style="display:none">
-            <ul></ul>
-            </div>
-         </form>  
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>    
+            
 
 <script type="text/javascript">
 

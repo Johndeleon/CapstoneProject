@@ -103,8 +103,7 @@
                     <div class="col-md-9">
                       <select class="form-control subject" name="courses" required>
                         @foreach ($courses as $course)
-                            <option value="{{$course->id}}">{{ $course->title }}</option>
-                            <option>{{ $course->title }}</option>
+                            <option value="{{ $course->id }}">{{ $course->title }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -115,7 +114,6 @@
                     <div class="col-md-9">
                       <select class="form-control teacher" name="teachers" required>
                         @foreach ($teachers as $teacher)
-                            <option value="{{$teacher->id}}">{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
                             <option>{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
                         @endforeach
                       </select>
@@ -155,7 +153,6 @@
                     <div class="col-md-9">
                       <select class="form-control subject" name="courses" required>
                         @foreach ($courses as $course)
-                            <option value="{{$course->id}}">{{ $course->title }}</option>
                             <option>{{ $course->title }}</option>
                         @endforeach
                       </select>
@@ -167,7 +164,6 @@
                     <div class="col-md-9">
                       <select class="form-control teacher" name="teachers" required>
                         @foreach ($teachers as $teacher)
-                            <option value="{{$teacher->id}}">{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
                             <option>{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
                         @endforeach
                       </select>
@@ -264,7 +260,6 @@
                       '<div class="col-md-9">'+
                         '<select class="form-control subject" name="courses" required>'+
                           '@foreach ($courses as $course)'+
-                              '<option value="{{$course->id}}">{{ $course->title }}</option>'+
                               '<option>{{ $course->title }}</option>'+
                           '@endforeach'+
                         '</select>'+
@@ -276,7 +271,6 @@
                       '<div class="col-md-9">'+
                         '<select class="form-control teacher" name="teachers" required>'+
                           '@foreach ($teachers as $teacher)'+
-                              '<option value="{{$teacher->id}}">{{ $teacher->first_name }} {{ $teacher->last_name }}</option>'+
                               '<option>{{ $teacher->first_name }} {{ $teacher->last_name }}</option>'+
                           '@endforeach'+
                         '</select>'+
@@ -418,7 +412,6 @@
         }
         , function(data, status){
             console.log(data);
-            
 
             window.localStorage['programs'] = data;
             window.open('/admin/customize-schedules');

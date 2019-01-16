@@ -44,7 +44,7 @@ class GreedyAlgorithmController extends Controller
         $inputTotalHours = $request->total_hours;
         $inputMeetings = $request->meeting;
 
-        // return $request->all();
+        //return $request->all();
 
         $numCourses = count($inputCourses);
         $availableDayPerTeacher = [];

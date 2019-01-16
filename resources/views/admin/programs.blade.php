@@ -1,7 +1,7 @@
 @extends('layouts.app1')
 
 @section('title')
-  Program Page
+  Program Pages
 @endsection
 
 @section('head')
@@ -18,7 +18,7 @@
   <div class="row justify-content-center">
     <div class="col-md-10">
       <div class="card">
-        <div class="card-header"> <span style="margin-top: 3px">Programs</span>
+        <div class="card-header bg-info"> <span style="margin-top: 3px"></span>
           <button class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addProgram">
             Add Program
           </button>

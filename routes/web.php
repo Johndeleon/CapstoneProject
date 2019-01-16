@@ -132,3 +132,8 @@ Route::get('/admin/generate-form-schedules','HomeController@getFormGenerateSched
 
 Route::post('/generate', 'GreedyAlgorithmController@generateSchedule')->name('generateSchedule');
 // @created by Kenneth @since January 3, @updated by John @since January 3
+
+/**  FOR CUZTOMIZATION PAGE */
+Route::get('/admin/customize-schedules', 'HomeController@getCuztomizePage')->name('getCuztomizePage');
+
+Route::post('/postIds', 'HomeController@postIds')->name('postIds');

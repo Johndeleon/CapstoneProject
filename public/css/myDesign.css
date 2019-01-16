@@ -50,11 +50,38 @@
 
 /* TEACHERS PAGE */
 /* card-headers */
+.cat-c {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
 .cat-ch {
   background: #5ab9ea;
   border-radius: 0;
   height: 30px;
   padding: 2px 10px 0 0;
+}
+
+.cat-table {
+	color: #5a6570;
+	font-size: 16px !important; 
+	font-weight: lighter !important;
+}
+.cat-table > thead {
+	color: #394148;
+}
+
+.cat-tab-btn {
+	background: #39a9e6 !important;
+	border-right: 1px solid #1b8ecd;
+	border-left: 1px solid #1b8ecd;
+	height: 100%;
+	margin: 0 15px !important;
+}
+
+.cat-mb {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
 }
 
 /* card-body */

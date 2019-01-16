@@ -9,7 +9,8 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" href="{{ asset('css/bootstrapcss/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -23,10 +24,13 @@
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/Linearicons-Free-v1.0.0/Web Font/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+
     <script src="{{ asset('js/jquery/jquery-3.3.1.min.js') }}"></script>
+
     <script src="{{ asset('js/bootstrapjs/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/jquery/jquery-ui.js') }}"></script>
+
 
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style4.css') }}">

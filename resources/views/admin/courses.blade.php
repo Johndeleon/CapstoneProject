@@ -37,25 +37,25 @@
 
 
         <!-- DELETE MODAL SECTION --> 
-@foreach ($courses as $course)
-        <div class="modal fade show" id="DeleteCourse{{ $course->id }}" tabindex="-1" role="dialog" aria-labelledby="">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="lead">Delete Course?</h1>
+        @foreach ($courses as $course)
+            <div class="modal fade show" id="DeleteCourse{{ $course->id }}" tabindex="-1" role="dialog" aria-labelledby="">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="lead">Delete Course?</h1>
+                        </div>
                         
-                    </div>
-                    <div class="modal-footer">
-                        <form action="/deletecourse/{{$course->id}}" method="get">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger">Yes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        </form>
+                        <div class="modal-footer">
+                            <form action="/deletecourse/{{$course->id}}" method="get">
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
 
 
         <!-- EDIT MODAL SECTION --> 

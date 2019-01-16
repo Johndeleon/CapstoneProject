@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
+use App\Schedule;
 
 class HomeController extends Controller
 {
@@ -149,10 +150,10 @@ public function editCourse(Request $request, $id)
     $course = Course::where('id',$id)
     ->first();
 
-    $course->code=$request->code;
-    $course->title=$request->title;
-    $course->units=$request->units;
-    $course->description=$request->description;
+    $course->code = $request->code;
+    $course->title = $request->title;
+    $course->units = $request->units;
+    $course->description = $request->description;
     $course->save();
 
     return redirect('admin/courses');
@@ -161,11 +162,12 @@ public function editCourse(Request $request, $id)
 
 public function deleteCourse($id)
 {
-$courseDeletion = Course::where('id',$id)
-->first();
-$courseDeletion->deleted_at = Carbon::now();
-$courseDeletion->save();
-return redirect('admin/courses');
+    $courseDeletion = Course::where('id',$id)
+                            ->first();
+    $courseDeletion->deleted_at = Carbon::now();
+    $courseDeletion->save();
+
+    return redirect('admin/courses');
 }
 //@created by John, @since November 10
 
@@ -550,8 +552,11 @@ return redirect('admin/rooms');
 
     $accessLevel = $access_level[0];
 
+    $teachers = Teacher::all();
+
     return view('admin.teacher')
-                ->with('accessLevel', $accessLevel);
+                ->with('accessLevel', $accessLevel)
+                ->with('teachers', $teachers);
   }
 
   public function postTeacher(Request $request) {
@@ -718,6 +723,59 @@ return redirect('admin/rooms');
       $meeting = $request->meeting;
 
       return $request->all();
+  }
+
+  /** CUSTOMIZATION PAGE */
+  public function getCuztomizePage() {
+    $userId = Auth::id();
+    $access_level = User::select('access_level')
+                      ->where('id', $userId)
+                      ->pluck('access_level');
+
+    $accessLevel = $access_level[0];
+
+
+    return view('generatedSchedules.customizeable-schedule')
+                ->with('accessLevel', $accessLevel);
+  }
+
+  public function postIds(Request $req) {
+    $academicId = $req->academicID;
+    $programId = $req->programID;
+    $semester = $req->semester;
+
+    $query = Schedule::where('academic_year_id', $academicId)
+                    ->where('semester', $semester)
+                    ->where('program_id', $programId)
+                    ->get();
+
+    $subjects = [];
+
+
+    foreach ($query as $item) {
+        /**GETTING TEACHERS NAME */
+        $teacher = Teacher::where('id', $item['teacher_id'])->first();
+        $teacher = $teacher->first_name .' '. $teacher->last_name;
+        // array_push($subjects, ["teacher"=>$teacher]);
+
+        $subject = Course::where('id', $item['course_id'])->first();
+        $subject = $subject->title;
+
+        $time = $item['time_start'] .' - '. $item['time_finish'];
+
+        $room = Room::where('id', $item['room_id'])->first();
+        $room = $room->room_name;
+
+        $day = $item['day_of_week'];
+
+
+        array_push($subjects, ["subject" => $subject, "teacher" => $teacher, "time" => $time, "room" => $room, "day" => $day]);
+
+    }
+
+    return $subjects;
+    // return $query;
+    // return $query;
   }
 
 }

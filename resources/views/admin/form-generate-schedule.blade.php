@@ -412,6 +412,9 @@
         }
         , function(data, status){
             console.log(data);
+            
+            window.localStorage['programs'] = data;
+            window.open('/admin/customize-schedules');
         }
         );
 

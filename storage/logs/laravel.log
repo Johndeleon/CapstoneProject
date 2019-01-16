@@ -9297,3 +9297,11 @@
 #64 C:\\Users\\Kenz\\Desktop\\git\\css_v6.1\\server.php(21): require_once('C:\\\\Users\\\\Kenz\\\\D...')
 #65 {main}
 "} 
+[2019-01-16 12:08:21] local.ERROR: Cannot use App\Schedule as Schedule because the name is already in use {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot use App\\Schedule as Schedule because the name is already in use at C:\\xampp\\htdocs\\capstone\\app\\Http\\Controllers\\HomeController.php:20)
+[stacktrace]
+#0 {main}
+"} 
+[2019-01-16 12:08:23] local.ERROR: Cannot use App\Schedule as Schedule because the name is already in use {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot use App\\Schedule as Schedule because the name is already in use at C:\\xampp\\htdocs\\capstone\\app\\Http\\Controllers\\HomeController.php:20)
+[stacktrace]
+#0 {main}
+"} 

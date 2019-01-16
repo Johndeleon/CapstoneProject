@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
-use App\Schedule;
 
 class HomeController extends Controller
 {

@@ -44,47 +44,45 @@ class GreedyAlgorithmController extends Controller
         $inputTotalHours = $request->total_hours;
         $inputMeetings = $request->meeting;
 
-        //return $request->all();
+        // return $request->all();
 
         $numCourses = count($inputCourses);
         $availableDayPerTeacher = [];
         $keyArrangement = [];
         $teachers = [];
 
-
-        for($i= 0 ; $i< $numCourses; $i++)
+        foreach($inputTeachers as $key => $teacher)
         {
-            $count = AvailableTime::where('teacher_id',$inputTeachers[$i])
+            $count = AvailableTime::where('teacher_id',$teacher)
             ->where('deleted_at',null)
             ->count();
-            $availableDayPerTeacher[$inputTeachers[$i]] = $count;
+            $availableDayPerTeacher[$key][$teacher] = $count;
         }
         asort($availableDayPerTeacher);
-
-        foreach($availableDayPerTeacher as $key => $value)
+        foreach($availableDayPerTeacher as $key => $row)
         {
-            $teachers[]= $key;
+            $keyArrangement[]= $key;
         }
 
-        for($i=0;$i<$numCourses;$i++)
+        for($i=$numCourses-1;$i>=0;$i--)
         {
-            $toSearch = $teachers[$i];
-            $keyArrangement[]= array_search($toSearch,$inputTeachers);
+            $toSearch = $keyArrangement[$i];
+            $teachers[$i] = $inputTeachers[$toSearch];
         }
 
-        for($i=0;$i<$numCourses;$i++)
+        for($i=$numCourses-1;$i>=0;$i--)
         {
             $toSearch = $keyArrangement[$i];
             $courses[$i] = $inputCourses[$toSearch];
         }
 
-        for($i=0;$i<$numCourses;$i++)
+        for($i=$numCourses-1;$i>=0;$i--)
         {
             $toSearch = $keyArrangement[$i];
             $meetings[$i] = $inputMeetings[$toSearch];
         }
 
-        for($i=0;$i<$numCourses;$i++)
+        for($i=$numCourses-1;$i>=0;$i--)
         {
             $toSearch = $keyArrangement[$i];
             $totalHours[$i] = $inputTotalHours[$toSearch];
@@ -100,7 +98,7 @@ class GreedyAlgorithmController extends Controller
 
 
         //course loop
-        for($i = 0; $i < $numCourses; $i++)
+        for($i = $numCourses-1; $i >= 0 ; $i--)
         {
             $dailyHours = [];
 

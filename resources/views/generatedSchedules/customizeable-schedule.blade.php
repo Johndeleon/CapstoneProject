@@ -134,10 +134,9 @@
 
         $(document).ready(function() {
           data = $.parseJSON(data);
-
+          console.log(data);
 
           data.forEach(function(item) {
-            console.log(item);
             var time = item.time_start + ' - ' + item.time_finish;
 
             $.post('/getRealData', {
@@ -258,21 +257,6 @@
 
             }); // POST FUNCTION
           }); // END OF FOREACH
-
-          //
-
-
-
-
-
-
-
-
-
-
-
-
-
         });
 
 

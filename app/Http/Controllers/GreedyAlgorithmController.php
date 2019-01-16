@@ -603,7 +603,7 @@ class GreedyAlgorithmController extends Controller
         // print_r($totalHours);
         // print_r($courses);
 
-        return json_encode($initSched);
+        return $initSched;
 
 
 

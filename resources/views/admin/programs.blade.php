@@ -15,7 +15,7 @@
 
     <div class="col-md-11 mx-auto">
       <div class="card bg-me">
-        <div class="card-header">
+        <div class="card-header cat-header">
           <a href="#" class="float-right" style="font-size: 13px">
             <i class="fa fa-window-minimize" aria-hidden="true"></i>
           </a>

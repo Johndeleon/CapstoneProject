@@ -148,6 +148,10 @@
 
     <script type="text/javascript">
       @yield('footerScript')
+
+      $(document).ready(function() {
+        // $('#sidebar').remove();
+      });
     </script>
 
 </body>

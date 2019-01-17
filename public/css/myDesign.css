@@ -7,6 +7,48 @@
 	background: yellow;
 }
 
+/* DASHBOARD CARDS */
+.card-size {
+  max-height: 200px;
+  min-height: 200px;
+  height: 100vh;
+  background: #eeeeee;
+
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+  transition: 0.2s ease-out;
+}
+.card-size:hover .cat-cover{
+  opacity: 0.8;
+}
+.card-size:hover{
+  color: #626262;
+}
+
+.cat-cover {
+  background-color: black;
+  border-radius: 2px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  position: absolute;
+}
+
+
+.cat-h2 {
+  font-size: 1.3rem;
+  font-weight: light;
+}
+
+.cat-btn-s {
+  min-width: 40px !important;
+}
+
+
 #academic-wrapper {
 	padding: 0;
 	position: relative;
@@ -50,6 +92,13 @@
 
 /* TEACHERS PAGE */
 /* card-headers */
+.bg-me {
+  background: #353535 !important;
+  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+
 .cat-c {
 	margin: 0 !important;
 	padding: 0 !important;
@@ -63,18 +112,20 @@
 }
 
 .cat-table {
-	color: #5a6570;
-	font-size: 16px !important; 
+  border-radius: 10px !important;
+	color: #e5e9e8;
+	font-size: 16px !important;
 	font-weight: lighter !important;
 }
 .cat-table > thead {
-	color: #394148;
+	color: #e5e9e8;
 }
 
 .cat-tab-btn {
-	background: #39a9e6 !important;
-	border-right: 1px solid #1b8ecd;
-	border-left: 1px solid #1b8ecd;
+  color: #e5e9e8 !important;
+	background: #333333 !important;
+	border-right: 1px solid #e5e9e8;
+	border-left: 1px solid #e5e9e8;
 	height: 100%;
 	margin: 0 15px !important;
 }

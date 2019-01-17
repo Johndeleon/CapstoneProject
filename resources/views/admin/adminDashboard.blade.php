@@ -17,7 +17,24 @@
 				<!-- SHOW PROGRAMS -->
 
 				@foreach($programs as $program)
-				<div class="col-md-4 mb-2">
+					<div class="col-md-4 mb-4">
+						<div class="card card-body card-size text-center">
+
+							<div class="cat-cover">
+								<div class="row col-md-11 mx-auto" style="margin-top: 27%">
+									@for($i=1; $i <= $program->levels; $i++)
+										<a class="mb-2 btn btn-primary cat-btn-s mx-auto" href="{{ $program->title }}{{ $i }}" {{ $hasSchedule[$program->id][$i] }}>
+											{{ $i }}
+										</a>
+									@endfor
+								</div>
+							</div>
+
+							<h2 class="cat-h2">{{ $program->title }}</h2>
+						</div>
+					</div>
+
+				{{-- <div class="col-md-4 mb-2">
 					<div class="card text-align">
 						<div class="card-body">
 							<h2>{{$program->title}}</h2>
@@ -33,7 +50,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				@endforeach
 
 
@@ -48,7 +65,7 @@
 		<div id="academic-wrapper" class="col-md-3 ml-auto">
 			<div class="card">
 					<!-- xx -->
-			    <div id="academic-name" class="card-header">Academic Year 2018-2019
+			    <div id="academic-name" class="card-header">Academic Year
 			    	<a class="float-right" href="" data-toggle="modal" data-target="#addAcademicYear"><i class="fa fa-plus" aria-hidden="true"></i></a>
 			    </div>
 
@@ -167,7 +184,7 @@
 			$('#date-autofill').val(add);
 			merge = input + ' - ' + add;
 		});
-		
+
 
 	});
 </script>

@@ -6,69 +6,47 @@
 
   <div class="container-fluid mb-5">
       <div class="row">
-          
-        <div class="col-md-12 mb-4">
-          <div class="card">
-            <div class="card-header rounded-0 cat-ch">
+
+        <div class="col-md-11 mx-auto">
+          <div class="card bg-me">
+            <div class="card-header">
               <a href="#" class="float-right" style="font-size: 13px">
                 <i class="fa fa-window-minimize" aria-hidden="true"></i>
               </a>
               <a href="#addTeacher" id="addTeacher-btn" data-toggle="modal" class="float-right px-3 mr-3 cat-tab-btn">
-                  <i class="fa fa-user mr-1 text-dark" aria-hidden="true"></i>
+                  <i class="fa fa-user mr-1" aria-hidden="true"></i>
                 Add
               </a>
-
-              <span class="ml-2 pt-1">Database View for Teachers</span>
             </div>
 
-            <div class="card-body cat-b">
+            <div class="table-responsive">
+              <table class="cat-table table bg-dark table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Fullname</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                  </tr>
+                </thead>
 
-              <div class="row">
+                <tbody>
+                  @foreach ($teachers as $teacher)
+                    <tr>
+                      <td>{{ $teacher->id }}</td>
+                      <td>{{ $teacher->first_name }} {{ $teacher->last_name }}</td>
+                      <td>{{ $teacher->contact_number }}</td>
+                      <td>{{ $teacher->email }}</td>
+                      <td>{{ $teacher->address }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
 
-                <div class="table-responsive p-2">
-                  <table id="myTable" class="table cat-table table-bordered table-striped" style="width: 100%">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Fullname</th>
-                        <th>Contact Number</th>
-                        <th>Email</th>
-                        <th>Address</th>                        
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      @foreach ($teachers as $teacher)
-                        <tr>
-                          <td>{{ $teacher->id }}</td>
-                          <td>{{ $teacher->first_name }} {{ $teacher->last_name }}</td>
-                          <td>{{ $teacher->contact_number }}</td>
-                          <td>{{ $teacher->email }}</td>
-                          <td>{{ $teacher->address }}</td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                    
-                  </table>
-                </div>
-
-              </div>
+              </table>
             </div>
           </div>
-        </div>
 
-        <div class="col-md-12">
-          <div class="card">
-            
-            <div class="card-header rounded-0 bg-info">
-
-            </div>
-
-            <div class="card-body">
-
-            </div>
-
-          </div>
         </div>
 
       </div>
@@ -247,8 +225,8 @@
           $(this).slider();
         });
 
-         /* DATATABLE FOR TEACHER */  
-         $('#myTable').DataTable(); 
+         /* DATATABLE FOR TEACHER */
+         $('#myTable').DataTable();
 
          $('.checkbox').prop('checked', true);
 
@@ -276,11 +254,11 @@
                         '<div id="slide"></div>'+
                       '</div>'+
                     '</div>' +
-                    
+
                   '</div>'
                 );
 
-                
+
 
 
               }

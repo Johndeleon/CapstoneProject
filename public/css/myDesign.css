@@ -121,9 +121,13 @@
 	color: #e5e9e8;
 }
 
+.cat-header {
+  background: #2e2e2e !important;
+}
+
 .cat-tab-btn {
   color: #e5e9e8 !important;
-	background: #333333 !important;
+	background: #2e2e2e !important;
 	border-right: 1px solid #e5e9e8;
 	border-left: 1px solid #e5e9e8;
 	height: 100%;

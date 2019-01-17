@@ -9,13 +9,13 @@
 
         <div class="col-md-11 mx-auto">
           <div class="card bg-me">
-            <div class="card-header">
+            <div class="card-header cat-header">
               <a href="#" class="float-right" style="font-size: 13px">
                 <i class="fa fa-window-minimize" aria-hidden="true"></i>
               </a>
               <a href="#addTeacher" id="addTeacher-btn" data-toggle="modal" class="float-right px-3 mr-3 cat-tab-btn">
                   <i class="fa fa-user mr-1" aria-hidden="true"></i>
-                Add
+                Add Teacher
               </a>
             </div>
 

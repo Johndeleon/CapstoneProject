@@ -69,7 +69,6 @@
 
           {{-- PAGE NAVIGATION BAR --}}
           <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
 
               {{-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-align-justify">What is this?</i>
@@ -106,8 +105,6 @@
                 </li>-->
                 </ul>
               </div>
-
-            </div>
           </nav>
 
             @yield('body')

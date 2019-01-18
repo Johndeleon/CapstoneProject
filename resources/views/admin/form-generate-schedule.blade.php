@@ -130,7 +130,7 @@
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Weekly meeting: </label>
                     <div class="col-md-9">
-                      <input type="number" class="form-control meeting" id="meeting1" name="" value="" required>
+                      <input type="number" class="form-control meeting" id="meeting1" name="" value="" min = 1 required>
                     </div>
                   </div>
 
@@ -325,7 +325,7 @@ $( ".row" ).on( "change", ".teacher", function( event ) {
                     '<div class="form-group row">' +
                       '<label class="col-md-3 col-form-label">Weekly meeting: </label>' +
                       '<div class="col-md-9">' +
-                        '<input type="number" class="form-control meeting" id=meeting'+iden+' name="" value="" required>' +
+                        '<input type="number" class="form-control meeting" id=meeting'+iden+' name="" value="" min = 1  required>' +
                       '</div>'+
                     '</div>'+
 

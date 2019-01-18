@@ -695,12 +695,31 @@ return redirect('admin/rooms');
       $programs = Program::where('deleted_at',null)
       ->get();
 
+      $availableDays = AvailableTime::selectRaw('teacher_id, count(*) as count')
+      ->groupBy('teacher_id')
+      ->get();
+
+      for($i=0;$i<count($teachers);$i++)
+      {
+          $teacherDays[]= 
+          [
+              'id' => $teachers[$i]->id,
+              'first_name' => $teachers[$i]->first_name,
+              'last_name' => $teachers[$i]->last_name,
+              'available_days' => $availableDays[$i]->count
+          ];
+      }
+
+
+
+    //   print_r(json_encode($availableDays));    
       return view('admin.form-generate-schedule')
                   ->with('accessLevel', $accessLevel)
                   ->with('academicYears', $academicYears)
                   ->with('courses', $courses)
-                  ->with('teachers', $teachers)
+                //   ->with('teachers', $teachers)
                   ->with('roomTypes',$roomTypes)
+                  ->with('teachers',$teacherDays)
                   ->with('programs', $programs);
   }
 

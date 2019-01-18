@@ -82,6 +82,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AccessLevel2Middleware'], fun
 
         Route::get('/generateschedule','GreedyAlgorithmController@generateSchedule')->name('generateSchedule');
         // @created by John @since Dec3, @updated by John @since Dec3
+
+        Route::post('/meetingsLimit','HomeController@meetingsLimit')->name('meetingsLimit');
+        // @created by John @since Dec3, @updated by John @since Dec3
+
         });
 
     Route::post('/course/assignteacher','HomeController@assignTeacher')->name('assignteacher');

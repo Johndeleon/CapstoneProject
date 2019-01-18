@@ -112,10 +112,10 @@
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Teacher: </label>
                     <div class="col-md-9">
-                      <select class="form-control teacher" name="teachers" required>
-                        @foreach ($teachers as $teacher)
-                            <option value="{{ $teacher->id }}">{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
-                        @endforeach
+                      <select class="form-control teacher" id="1" name="teachers" required>
+                          @for($i=0;$i < count($teachers);$i++)
+                            <option value="{{ $teachers[$i]['id'] }}">{{ $teachers[$i]['first_name'] }} {{ $teachers[$i]['last_name']}}</option>
+                        @endfor
                       </select>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Weekly meeting: </label>
                     <div class="col-md-9">
-                      <input type="text" class="form-control meeting" name="" value="" required>
+                      <input type="number" class="form-control meeting" id="meeting1" name="" value="" required>
                     </div>
                   </div>
 
@@ -146,7 +146,7 @@
                   </div>
 
               </div>
-
+<!-- 
               <div class="col-md-10 mx-auto pt-4" style="border-top: 1px solid #e2e2e2">
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Subject: </label>
@@ -162,10 +162,10 @@
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Teacher: </label>
                     <div class="col-md-9">
-                      <select class="form-control teacher" name="teachers" required>
-                        @foreach ($teachers as $teacher)
-                            <option value="{{ $teacher->id }}">{{ $teacher->first_name }} {{ $teacher->last_name }}</option>
-                        @endforeach
+                      <select class="form-control teacher" id="2" name="teachers" required>
+                      @for($i=0;$i < count($teachers);$i++)
+                            <option value="{{ $teachers[$i]['id'] }}">{{ $teachers[$i]['first_name'] }} {{ $teachers[$i]['last_name']}}</option>
+                        @endfor
                       </select>
                     </div>
                   </div>
@@ -173,14 +173,14 @@
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Subject Total Hours: </label>
                     <div class="col-md-9">
-                      <input type="text" class="form-control total-hours" name="" value="" required>
+                      <input type="number" class="form-control total-hours" name="" value="" required>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label class="col-md-3 col-form-label">Weekly meeting: </label>
                     <div class="col-md-9">
-                      <input type="text" class="form-control meeting" name="" value="" required>
+                      <input type="text" class="form-control meeting" id="meeting2" name="" value="" required>
                     </div>
                   </div>
 
@@ -197,8 +197,7 @@
               </div>
 
 
-
-
+ -->
 
           </div>
 
@@ -254,7 +253,44 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var newForm = '<div class="col-md-10 mx-auto pt-4 on-air-form" style="border-top: 1px solid #e2e2e2">'+
+
+
+$( ".row" ).on( "change", ".teacher", function( event ) {
+      var teachers = <?php echo json_encode($teachers); ?>;
+      var teacherId = this.value
+      var maxMeeting = 0
+      console.log(teachers)
+      for (var i = 0; i < teachers.length; i++)
+      {
+        if(teachers[i]['id'] == teacherId)
+        {
+          maxMeeting = teachers[i]['available_days']
+        }
+      }
+      if(maxMeeting > 3)
+      {
+        maxMeeting = 3
+      }
+
+     var meeting = document.getElementById('meeting'+this.id)
+     meeting.setAttribute('max',maxMeeting)
+
+    });
+
+
+
+
+    /* REMOVE SIDEBAR */
+    $('#sidebar').remove();
+
+    /* ADD SUBJECT FORM */
+    var form = 0;
+    var iden = 2
+
+    
+    $(document).on('click', '#addBtn', function(e) {
+
+      var newForm = '<div class="col-md-10 mx-auto pt-4 on-air-form" style="border-top: 1px solid #e2e2e2">'+
                     '<div class="form-group row">'+
                       '<label class="col-md-3 col-form-label">Subject: </label>'+
                       '<div class="col-md-9">'+
@@ -269,10 +305,12 @@
                     '<div class="form-group row">'+
                       '<label class="col-md-3 col-form-label">Teacher: </label>'+
                       '<div class="col-md-9">'+
-                        '<select class="form-control teacher" name="teachers" required>'+
-                          '@foreach ($teachers as $teacher)'+
-                              '<option value="{{ $teacher->id }}">{{ $teacher->first_name }} {{ $teacher->last_name }}</option>'+
-                          '@endforeach'+
+                        '<select class="form-control teacher" id='+iden+' name="teachers" required>'+
+                        
+    
+                          '@for($i=0;$i < count($teachers);$i++)'+
+                              '<option value="{{ $teachers[$i]['id'] }}">{{ $teachers[$i]['first_name'] }} {{ $teachers[$i]['last_name']}}</option>'+
+                          '@endfor'+
                         '</select>'+
                       '</div>'+
                     '</div>'+
@@ -287,7 +325,7 @@
                     '<div class="form-group row">' +
                       '<label class="col-md-3 col-form-label">Weekly meeting: </label>' +
                       '<div class="col-md-9">' +
-                        '<input type="text" class="form-control meeting" name="" value="" required>' +
+                        '<input type="number" class="form-control meeting" id=meeting'+iden+' name="" value="" required>' +
                       '</div>'+
                     '</div>'+
 
@@ -306,34 +344,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* REMOVE SIDEBAR */
-    $('#sidebar').remove();
-
-    /* ADD SUBJECT FORM */
-    var form = 0;
-    $(document).on('click', '#addBtn', function(e) {
       $('#subj-card-body').append(newForm);
       $('#undoBtn').removeAttr('hidden');
+      iden++;
       form++;
     });
 

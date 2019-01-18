@@ -9,8 +9,14 @@ body {
 }
 
 #navbarDropdown {
-    background: #84CEEB;
+    background: #232323;
     font-size: 15px;
+    color: #f4f4f4;
+    opacity: 0.8;
+}
+#navbarDropdown:hover {
+    opacity: 1;
+    transition: 0.1s ease-in-out;
 }
 
 p {
@@ -31,7 +37,7 @@ a:focus {
 
 .navbar {
     padding: 5px 10px;
-    background: #84CEEB;
+    background: #232323;
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
@@ -68,7 +74,7 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #5AB9EA;
+    background: #e5e9e8;
     color: #ebebeb;
     transition: all 0.3s;
 }
@@ -120,7 +126,8 @@ span {
 
 #sidebar .sidebar-header {
     padding: 10px 10px;
-    background: #5AB9EA;
+    background: #e5e9e8;
+    color: #303030;
 }
 
 #sidebar .sidebar-header strong {
@@ -131,6 +138,7 @@ span {
 #sidebar ul.components {
     padding: 20px 0;
     border-bottom: 1px solid #47748b;
+    color: #303030;
 }
 
 #sidebar ul li a {
@@ -140,8 +148,8 @@ span {
 }
 
 #sidebar ul li a:hover {
-    color: #fff;
-    background: #6d7fcc;
+    color: #eeeeee;
+    background: #353535;
 }
 
 #sidebar ul li a i {
@@ -150,8 +158,8 @@ span {
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #8860D0;
-    background: #ebebeb;
+    color: #eeeeee;
+    background: #353535;
 }
 
 a[data-toggle="collapse"] {
@@ -204,7 +212,7 @@ a.article:hover {
     padding: 0px;
     min-height: 100vh;
     transition: all 0.3s;
-    background: #ebebeb;
+    background: #353535;
 }
 
 /* ---------------------------------------------------

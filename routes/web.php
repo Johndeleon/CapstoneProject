@@ -82,6 +82,10 @@ Route::group(['middleware' => 'App\Http\Middleware\AccessLevel2Middleware'], fun
 
         Route::get('/generateschedule','GreedyAlgorithmController@generateSchedule')->name('generateSchedule');
         // @created by John @since Dec3, @updated by John @since Dec3
+
+        Route::post('/meetingsLimit','HomeController@meetingsLimit')->name('meetingsLimit');
+        // @created by John @since Dec3, @updated by John @since Dec3
+
         });
 
     Route::post('/course/assignteacher','HomeController@assignTeacher')->name('assignteacher');
@@ -132,3 +136,8 @@ Route::get('/admin/generate-form-schedules','HomeController@getFormGenerateSched
 
 Route::post('/generate', 'GreedyAlgorithmController@generateSchedule')->name('generateSchedule');
 // @created by Kenneth @since January 3, @updated by John @since January 3
+
+/**  FOR CUZTOMIZATION PAGE */
+Route::get('/admin/customize-schedules', 'HomeController@getCuztomizePage')->name('getCuztomizePage');
+
+Route::post('/getRealData', 'HomeController@getRealData')->name('getRealData');

@@ -149,10 +149,10 @@ public function editCourse(Request $request, $id)
     $course = Course::where('id',$id)
     ->first();
 
-    $course->code=$request->code;
-    $course->title=$request->title;
-    $course->units=$request->units;
-    $course->description=$request->description;
+    $course->code = $request->code;
+    $course->title = $request->title;
+    $course->units = $request->units;
+    $course->description = $request->description;
     $course->save();
 
     return redirect('admin/courses');
@@ -161,11 +161,12 @@ public function editCourse(Request $request, $id)
 
 public function deleteCourse($id)
 {
-$courseDeletion = Course::where('id',$id)
-->first();
-$courseDeletion->deleted_at = Carbon::now();
-$courseDeletion->save();
-return redirect('admin/courses');
+    $courseDeletion = Course::where('id',$id)
+                            ->first();
+    $courseDeletion->deleted_at = Carbon::now();
+    $courseDeletion->save();
+
+    return redirect('admin/courses');
 }
 //@created by John, @since November 10
 
@@ -550,8 +551,11 @@ return redirect('admin/rooms');
 
     $accessLevel = $access_level[0];
 
+    $teachers = Teacher::all();
+
     return view('admin.teacher')
-                ->with('accessLevel', $accessLevel);
+                ->with('accessLevel', $accessLevel)
+                ->with('teachers', $teachers);
   }
 
   public function postTeacher(Request $request) {
@@ -588,7 +592,7 @@ return redirect('admin/rooms');
             $isPresent = Schedule::where('program_id',$program->id)
             ->where('level',$i)
             ->count();
-  
+
             if($isPresent != 0)
             {
                 $hasSchedule[$program->id][$i] = 'enabled';
@@ -691,12 +695,31 @@ return redirect('admin/rooms');
       $programs = Program::where('deleted_at',null)
       ->get();
 
+      $availableDays = AvailableTime::selectRaw('teacher_id, count(*) as count')
+      ->groupBy('teacher_id')
+      ->get();
+
+      for($i=0;$i<count($teachers);$i++)
+      {
+          $teacherDays[]= 
+          [
+              'id' => $teachers[$i]->id,
+              'first_name' => $teachers[$i]->first_name,
+              'last_name' => $teachers[$i]->last_name,
+              'available_days' => $availableDays[$i]->count
+          ];
+      }
+
+
+
+    //   print_r(json_encode($availableDays));    
       return view('admin.form-generate-schedule')
                   ->with('accessLevel', $accessLevel)
                   ->with('academicYears', $academicYears)
                   ->with('courses', $courses)
-                  ->with('teachers', $teachers)
+                //   ->with('teachers', $teachers)
                   ->with('roomTypes',$roomTypes)
+                  ->with('teachers',$teacherDays)
                   ->with('programs', $programs);
   }
 
@@ -718,6 +741,96 @@ return redirect('admin/rooms');
       $meeting = $request->meeting;
 
       return $request->all();
+  }
+
+  /** CUSTOMIZATION PAGE */
+  public function getCuztomizePage() {
+    $userId = Auth::id();
+    $access_level = User::select('access_level')
+                      ->where('id', $userId)
+                      ->pluck('access_level');
+
+    $accessLevel = $access_level[0];
+
+
+    return view('generatedSchedules.customizeable-schedule')
+                ->with('accessLevel', $accessLevel);
+  }
+
+  public function getRealData(Request $req) {
+      $teacher_id = $req->teacher;
+      $room_id = $req->room;
+      $ay = $req->ay;
+      $program_id = $req->program;
+      $semester = $req->semester;
+      $course_id = $req->course;
+
+      $teacher = Teacher::select('first_name', 'last_name')
+                          ->where('id', $teacher_id)
+                          ->first();
+
+      $teacher = $teacher->first_name .' '.$teacher->last_name;
+
+      $course = Course::select('title')
+                        ->where('id', $course_id)
+                        ->first();
+
+      $course = $course->title;
+
+      $room = Room::select('room_name')
+                        ->where('id', $room_id)
+                        ->first();
+
+      $room = $room->room_name;
+
+      $data['names'] = array(
+        'teacher' => $teacher,
+        'course' => $course,
+        'room' => $room
+      );
+
+      return $data;
+
+
+
+
+
+    // $academicId = $req->academicID;
+    // $programId = $req->programID;
+    // $semester = $req->semester;
+    //
+    // $query = Schedule::where('academic_year_id', $academicId)
+    //                 ->where('semester', $semester)
+    //                 ->where('program_id', $programId)
+    //                 ->get();
+    //
+    // $subjects = [];
+    //
+    //
+    // foreach ($query as $item) {
+    //     /**GETTING TEACHERS NAME */
+    //     $teacher = Teacher::where('id', $item['teacher_id'])->first();
+    //     $teacher = $teacher->first_name .' '. $teacher->last_name;
+    //     // array_push($subjects, ["teacher"=>$teacher]);
+    //
+    //     $subject = Course::where('id', $item['course_id'])->first();
+    //     $subject = $subject->title;
+    //
+    //     $time = $item['time_start'] .' - '. $item['time_finish'];
+    //
+    //     $room = Room::where('id', $item['room_id'])->first();
+    //     $room = $room->room_name;
+    //
+    //     $day = $item['day_of_week'];
+    //
+    //
+    //     array_push($subjects, ["subject" => $subject, "teacher" => $teacher, "time" => $time, "room" => $room, "day" => $day]);
+    //
+    // }
+    //
+    // return $subjects;
+    // return $query;
+    // return $query;
   }
 
 }

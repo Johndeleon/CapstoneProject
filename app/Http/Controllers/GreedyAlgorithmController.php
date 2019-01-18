@@ -9,6 +9,7 @@ use App\User;
 use DB;
 use Carbon\Carbon;
 use App\Room;
+use App\RoomType;
 use App\AvailableTime;
 use App\Schedule;
 use App\Course;
@@ -38,14 +39,56 @@ class GreedyAlgorithmController extends Controller
         $aY_id = $aY_id[0];
 
         $semester = $request->semester;
-        $courses = $request->courses;
-        $teachers = $request->teachers;
-        $totalHours = $request->total_hours;
-        $meetings = $request->meeting;
+        $inputCourses = $request->courses;
+        $inputTeachers = $request->teachers;
+        $inputTotalHours = $request->total_hours;
+        $inputMeetings = $request->meeting;
 
         // return $request->all();
 
-        $numCourses = count($courses);
+        $numCourses = count($inputCourses);
+        $availableDayPerTeacher = [];
+        $keyArrangement = [];
+        $teachers = [];
+
+        foreach($inputTeachers as $key => $teacher)
+        {
+            $count = AvailableTime::where('teacher_id',$teacher)
+            ->where('deleted_at',null)
+            ->count();
+            $availableDayPerTeacher[$key][$teacher] = $count;
+        }
+        asort($availableDayPerTeacher);
+        foreach($availableDayPerTeacher as $key => $row)
+        {
+            $keyArrangement[]= $key;
+        }
+
+        for($i=$numCourses-1;$i>=0;$i--)
+        {
+            $toSearch = $keyArrangement[$i];
+            $teachers[$i] = $inputTeachers[$toSearch];
+        }
+
+        for($i=$numCourses-1;$i>=0;$i--)
+        {
+            $toSearch = $keyArrangement[$i];
+            $courses[$i] = $inputCourses[$toSearch];
+        }
+
+        for($i=$numCourses-1;$i>=0;$i--)
+        {
+            $toSearch = $keyArrangement[$i];
+            $meetings[$i] = $inputMeetings[$toSearch];
+        }
+
+        for($i=$numCourses-1;$i>=0;$i--)
+        {
+            $toSearch = $keyArrangement[$i];
+            $totalHours[$i] = $inputTotalHours[$toSearch];
+        }
+
+
 
         $days_of_week = ['monday','tuesday','wendesday','thursday','friday','saturday'];
 
@@ -54,29 +97,10 @@ class GreedyAlgorithmController extends Controller
         $initProgSched = array();
 
 
-            print_r($courses);
-            print('<br>');
-            print_r($meetings);
-            print('<br>');
-            print_r($totalHours);
-            print('<br>');
-            print_r($teachers);
-            print('<br>');
-            print_r($numCourses);
-            print('<br>');
-            print_r($roomType);
-            print('<br>');
-            print('<br>');
-
-
         //course loop
-        for($i = 0; $i < $numCourses; $i++)
+        for($i = $numCourses-1; $i >= 0 ; $i--)
         {
             $dailyHours = [];
-            $course = Course::select('id')
-            ->where('title',$courses[$i])
-            ->first();
-
 
             if($meetings[$i] == 1 && $totalHours[$i] == 2)
                 {
@@ -147,35 +171,20 @@ class GreedyAlgorithmController extends Controller
             {
                 $loopControl = 0;
 
-                $dbteachers = Teacher::select('id',DB::raw("CONCAT(first_name,' ',last_name) AS fullName"))
-                ->where('deleted_at',null)
-                ->get();
-
-                foreach($dbteachers as $teacher)
-               {
-                    if($teachers[$i] == $teacher->fullName)
-                    {
-                        $teacherId = $teacher->id;
-                        break;
-                    }
-               }
-
                 //if initsched is empty
                 if(empty($initSched))
                 {
                     //day loop
                     for($day = 1;$day < 7; $day++)
                     {
-                        //get all the available days of the teacher
-                        $selectedDay = AvailableTime::where('teacher_id',$teacherId)
+                        //check if $day is available
+                        $selectedDay = AvailableTime::where('teacher_id',$teachers[$i])
                         ->where('available_day',$day)
                         ->where('deleted_at',null)
                         ->first();
 
                         if($selectedDay != null)
                         {
-                        //adds n mnumber of hours to the time start based on the number of meetings per week
-
 
                     //time loop
                         for ($k = 0 ; $k < count($timeStart);$k++)
@@ -206,16 +215,17 @@ class GreedyAlgorithmController extends Controller
                                 $availableTimes = AvailableTime::select('time_start','time_finish')
                                 ->where('available_day',$selectedDay->available_day)
                                 ->where('deleted_at',null)
-                                ->where('teacher_id',$teacherId)
+                                ->where('teacher_id',$teachers[$i])
                                 ->first();
 
-                                $teacherSchedules = Schedule::where('teacher_id',$teacherId)
+                                $teacherSchedules = Schedule::where('teacher_id',$teachers[$i])
                                 ->where('day_of_week',$selectedDay->available_day)
                                 ->where('semester',$semester)
+                                ->where('academic_year_id',$aY_id)
                                 ->get();
 
                                     //compares the current timestart and time finish if they are within the teachers time availability
-                                if($timeStart[$k] >= $availableTimes->time_start && $timeFinish <= $availableTimes->time_finish && isset($teacherSchedules))
+                                if($timeStart[$k] >= $availableTimes->time_start && $timeStart[$k] <= $availableTimes->time_finish && $timeFinish >= $availableTimes->time_start && $timeFinish <= $availableTimes->time_finish && isset($teacherSchedules))
                                 {
                                         $conflict = 0;
 
@@ -271,18 +281,13 @@ class GreedyAlgorithmController extends Controller
                                                     if($conflict == 0)
                                                     {
 
-                                                        $course = Course::select('id')
-                                                        ->where('title',$courses[$i])
-                                                        ->where('deleted_at',null)
-                                                        ->first();
-
                                                         $initCourseSched = [
                                                             'academic_year_id' => $aY_id,
                                                             'semester' => 1,
                                                             'program_id' => $program_id,
                                                             'level' => $level,
-                                                            'course_id' => $course->id,
-                                                            'teacher_id' => $teacherId,
+                                                            'course_id' => $courses[$i],
+                                                            'teacher_id' => $teachers[$i],
                                                             'room_id' => $selectedRoom,
                                                             'day_of_week' => $selectedDay->available_day,
                                                             'time_start' => $timeStart[$k],
@@ -336,7 +341,7 @@ class GreedyAlgorithmController extends Controller
                 for($day = 1;$day <= 6; $day++)
                 {
                     //get all the available days of the teacher
-                    $selectedDay = AvailableTime::where('teacher_id',$teacherId)
+                    $selectedDay = AvailableTime::where('teacher_id',$teachers[$i])
                     ->where('available_day',$day)
                     ->where('deleted_at',null)
                     ->first();
@@ -347,7 +352,7 @@ class GreedyAlgorithmController extends Controller
 
                         for($z=0;$z<count($initProgSched);$z++)
                         {
-                            if($course->id == $initProgSched[$z]['course_id'] && $selectedDay['available_day'] == $initProgSched[$z]['day_of_week'])
+                            if($courses[$i] == $initProgSched[$z]['course_id'] && $selectedDay['available_day'] == $initProgSched[$z]['day_of_week'])
                             {
                                 $tooManyMeeting = 1;
                             }
@@ -385,17 +390,22 @@ class GreedyAlgorithmController extends Controller
                                     $availableTimes = AvailableTime::select('time_start','time_finish')
                                     ->where('available_day',$selectedDay['available_day'])
                                     ->where('deleted_at',null)
-                                    ->where('teacher_id',$teacherId)
+                                    ->where('teacher_id',$teachers[$i])
                                     ->first();
 
-                                    $teacherSchedules = Schedule::where('teacher_id',$teacherId)
+                                    $teacherSchedules = Schedule::where('teacher_id',$teachers[$i])
                                     ->where('day_of_week',$selectedDay->available_day)
+                                    ->where('academic_year_id',$aY_id)
                                     ->where('semester',$semester)
                                     ->get();
+
                                         //compares the current timestart and time finish if they are within the teachers time availability
-                                    if($timeStart[$k] >= $availableTimes['time_start'] && $timeFinish <= $availableTimes['time_finish'])
+                                    if($timeStart[$k] >= $availableTimes['time_start'] && $timeStart[$k] <= $availableTimes['time_finish'] && $timeFinish >= $availableTimes['time_start'] && $timeFinish <= $availableTimes['time_finish'])
                                     {
                                             $conflict = 0;
+
+                                            if($teacherSchedules != null)
+                                            {
                                                 foreach($teacherSchedules as $schedule)
                                                 {
                                                 if($timeStart[$k] >= $schedule->time_start && $timeStart[$k] <= $schedule->time_finish || $timeFinish >= $schedule->time_start && $timeFinish <= $schedule->time_finish)
@@ -403,13 +413,14 @@ class GreedyAlgorithmController extends Controller
                                                         $conflict = 1;
                                                     }
                                                 }
-
+                                            }
                                                 for($y = 0;$y < count($initProgSched);$y++)
                                                 {
-                                                    if($teacherId == $initProgSched[$y]['teacher_id'] &&
+                                                    if(
                                                     $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
                                                     $timeStart[$k] >= $initProgSched[$y]['time_start'] &&
                                                     $timeStart[$k] <= $initProgSched[$y]['time_finish']
+
                                                 )
                                                     {
                                                         $conflict = 1;
@@ -418,7 +429,7 @@ class GreedyAlgorithmController extends Controller
 
                                                 for($y = 0;$y < count($initProgSched);$y++)
                                                 {
-                                                    if($teacherId == $initProgSched[$y]['teacher_id'] &&
+                                                    if(
                                                     $selectedDay->available_day == $initProgSched[$y]['day_of_week'] &&
                                                     $timeFinish >= $initProgSched[$y]['time_start'] &&
                                                     $timeFinish <= $initProgSched[$y]['time_finish']
@@ -428,7 +439,7 @@ class GreedyAlgorithmController extends Controller
                                                     }
                                                 }
 
-                                                if($timeFinish > 1800)
+                                                if($timeFinish > 2000)
                                                 {
                                                     $conflict = 1;
                                                 }
@@ -493,18 +504,13 @@ class GreedyAlgorithmController extends Controller
                                                         if($conflict == 0)
                                                         {
 
-                                                            $course = Course::select('id')
-                                                            ->where('title',$courses[$i])
-                                                            ->where('deleted_at',null)
-                                                            ->first();
-
                                                             $initCourseSched = [
                                                                 'academic_year_id' => $aY_id,
                                                                 'semester' => $semester,
                                                                 'program_id' => $program_id,
                                                                 'level' => $level,
-                                                                'course_id' => $course->id,
-                                                                'teacher_id' => $teacherId,
+                                                                'course_id' => $courses[$i],
+                                                                'teacher_id' => $teachers[$i],
                                                                 'room_id' => $selectedRoom,
                                                                 'day_of_week' => $selectedDay->available_day,
                                                                 'time_start' => $timeStart[$k],
@@ -557,6 +563,10 @@ class GreedyAlgorithmController extends Controller
                             }
 
                         }
+                    }//a day matched with teachers availbility
+                    if($loopControl == 0 && $day == 6)
+                    {
+
                     }
                 }//day with json
 
@@ -585,7 +595,17 @@ class GreedyAlgorithmController extends Controller
                 $save->save();
 
         }
-        print(json_encode($teacherSchedules));        // return $request->all();
+        // print_r($keyArrangement);
+        // print_r($teachers);
+        // print_r($meetings);
+        // print_r($totalHours);
+        // print_r($courses);
+
+        return $initSched;
+
+
+
+        // return $request->all();
 
     }//class
 

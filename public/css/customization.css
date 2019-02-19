@@ -1,0 +1,15 @@
+.pink {
+	background: pink;
+}
+
+.black {
+	background: black;
+}
+
+.card-schedule {
+
+}
+.card-schedule:hover {
+	cursor: pointer;
+}
+

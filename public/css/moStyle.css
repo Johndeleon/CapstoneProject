@@ -1,0 +1,50 @@
+/* .export-btn {
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.export-btn a {
+  width: inherit;
+  padding-top: 30px;
+  height: 60px;
+  left: 0;
+  position: absolute;
+  text-decoration: none;
+  color: gray;
+} */
+.export-btn {
+  position: relative;
+}
+
+.export-btn a {
+  display: block;
+  padding-top: 26px;
+  width: 380px;
+  height: 80px;
+  text-decoration: none;
+  color: gray;
+}
+
+a:focus, a.focus {
+  outline: none;
+}
+
+input:focus, input.focus {
+  outline: none;
+}
+
+lnr-upload:hover {
+  color: white;
+}
+
+.export-btn:hover {
+  background: #ddd;
+  transition: 0.2s ease-in;
+}
+.export-btn a:hover {
+  color: #333;
+  transition: 0.1s ease-in;
+}
+.import-btn {
+  overflow: hidden;
+}

@@ -1,0 +1,1 @@
+applied the logic of greedy algorithm, no design included, no user input its just static with randomizer

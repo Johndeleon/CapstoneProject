@@ -1,0 +1,91 @@
+/* FOR HOME BLADE */
+.pink {
+  background: pink;
+}
+
+.dropdown {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: inherit;
+}
+
+#dropdownMenu1 {
+  background: pink;
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 30px 0 20px;
+}
+#dropdownMenu1:hover {
+  cursor: pointer;
+  background: #ffaebc;
+}
+.dropdown-menu {
+  background-color: pink;
+  text-align: left;
+  width: 320px;
+}
+.dropdown-menu > li {
+  border: 1px solid gray;
+  font-size: 18px;
+  height: 50px;
+  line-height: 50px;
+}
+.dropdown-menu > li:hover {
+  background-color: #ffaebc;
+  cursor: pointer;
+}
+.dropdown-menu > li:hover a {
+  color: #ffeaee;
+}
+.dropdown-menu > li > a {
+  padding-left: 30px;
+  text-decoration: none;
+}
+.dropdown-menu:last-child {
+  font-size: 50px;
+}
+
+.addAcad {
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 50px;
+  line-height: 45px;
+  margin: 10px auto 0;
+  width: 50px;
+  text-align: center;
+}
+.addAcad:hover {
+  background: gray;
+  color: white;
+}
+
+.liInput {
+  border: none;
+  margin: 0 10px 0 30px;
+  height: 40px;
+  border-radius: 10px;
+  padding: 20px 5px;
+}
+.liInput:focus {
+  outline: none;
+  border: none;
+}
+
+.liInputBtn {
+  background: white;
+  border-radius: 50%;
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  margin: 4px 10px 0 0;
+  text-align: center;
+  width: 40px;
+}
+.liInputBtn:hover {
+  background: gray;
+  color: white;
+  cursor: pointer;
+}

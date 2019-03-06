@@ -12,11 +12,14 @@ class Course extends Model
     public $table = "courses";
 
     public $fillable = [
-    	'code',
+		'program_id',
+		'academic_year',
+		'semester',
+		'level',
+		'teacher',
     	'title',
-    	'description',
+    	'code',
     	'units',
-    	'course_category_id',
     ];
 
 }

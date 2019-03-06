@@ -192,7 +192,8 @@ Route::get('/admin/courses/show', 'HomeController@overallShow')->name('overallSh
 Route::post('/admin/courses/update', 'HomeController@overallUpdate')->name('overallUpdate');
 // Get available levels
 Route::get('/admin/courses/get-level', 'HomeController@courseGetLevel')->name('courseGetLevel');
-
+//Import courses from excel
+Route::post('/admin/courses/import-courses', 'HomeController@importCourse')->name('importCourses');
 
 /* PROGRAM MODULE */
 
@@ -206,6 +207,8 @@ Route::get('/admin/programs/delete', 'HomeController@overallDelete')->name('over
 Route::get('/admin/programs/show', 'HomeController@overallShow')->name('overallShow');
 // Update Data
 Route::post('/admin/programs/update', 'HomeController@overallUpdate')->name('overallUpdate');
+//Import programs from excel
+Route::post('/admin/programs/import-programs', 'HomeController@importProgram')->name('importProgram');
 
 /* TEACHER'S MODULE */
 
@@ -219,12 +222,18 @@ Route::get('/admin/teachers/delete', 'HomeController@overallDelete')->name('over
 Route::get('/admin/teachers/edit', 'HomeController@overallEdit')->name('overallEdit');
 // Update teachers data
 Route::post('/admin/teachers/update', 'HomeController@overallUpdate')->name('overallUpdate');
+//Import teachers from excel
+Route::post('/admin/teachers/import-teachers', 'HomeController@importTeacher')->name('importTeachers');
+//Import teachers from excel
+Route::post('/admin/teachers/import-available-time', 'HomeController@importAvailableTime')->name('importAvailableTime');
+
 
 /* ROOMS MODULE */
 
 // Rooms Data table
+//Import teachers from excel
+Route::post('/admin/rooms/import-rooms', 'HomeController@importRoom')->name('importRooms');
 Route::get('/load/rooms-table', 'HomeController@getRoomTable')->name('getRoomTable');
-
 // Add Rooms in db
 Route::post('/admin/rooms/add-rooms', 'HomeController@overallAdd')->name('overallAdd');
 // Delete Rooms in DB
@@ -262,3 +271,4 @@ Route::get('/admin/dashboard/get-program-schedule', 'HomeController@getProgramSc
 
 // Get the program title and academic year with semester
 Route::get('/admin/dashboard/get-title', 'HomeController@getTitle')->name('getTitle');
+

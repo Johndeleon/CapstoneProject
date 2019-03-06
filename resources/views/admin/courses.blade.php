@@ -167,6 +167,41 @@
     </div>
 
   </div>
+
+  <div class="row">
+{{-- IMPORT COURSES FROM EXCEL --}}
+    <div class="col-md-5">
+            <div class="card ct-card">
+                <div class="card-header ct-header py-reduced-1">
+              <small>
+                <i class="fa fa-cog" aria-hidden="true"></i> Import From Excel
+              </small>
+              {{-- <i class="fa fa-cog" aria-hidden="true"></i>
+              Import from Excel --}}
+            </div>
+
+            <div class="card-body">
+              <h5>Select Excel File</h5>
+              <hr>
+              
+              <form method="POST" action="/admin/courses/import-courses" name="import-courses" enctype="multipart/form-data">
+                @csrf
+                {{-- SELECT EXCEL FILE --}}
+                  <div class="form-group">
+                    <small class="ct-small-font"> From </small>
+                    <input type="file" class="form-control tobe-reset required" name="excelFile" placeholder="Excel File">
+                  </div>
+                  <button type="submit" id="importCourses" class="btn btn-danger pull-right">
+                    Import this to Database 
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+              </form>
+              
+            </div>
+
+            </div>
+    </div>
+</div>
 </div>
 
 <div class="modal fade show" id="editData" tabindex="-1" role="dialog" aria-labelledby="">

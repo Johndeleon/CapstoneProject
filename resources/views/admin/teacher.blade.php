@@ -255,6 +255,74 @@
     </div>
 
   </div>
+  <div class="row">
+{{-- IMPORT TEACHERS FROM EXCEL --}}
+    <div class="col-md-5">
+            <div class="card ct-card">
+                <div class="card-header ct-header py-reduced-1">
+              <small>
+                <i class="fa fa-cog" aria-hidden="true"></i> Import From Excel
+              </small>
+              {{-- <i class="fa fa-cog" aria-hidden="true"></i>
+              Import from Excel --}}
+            </div>
+
+            <div class="card-body">
+              <h5>Select Excel File</h5>
+              <hr>
+              
+              <form method="POST" action="/admin/teachers/import-teachers" name="import-teachers" enctype="multipart/form-data">
+                @csrf
+                {{-- SELECT EXCEL FILE --}}
+                  <div class="form-group">
+                    <small class="ct-small-font"> From </small>
+                    <input type="file" class="form-control tobe-reset required" name="excelFile" placeholder="Excel File">
+                  </div>
+                  <button type="submit" id="importTeachers" class="btn btn-danger pull-right">
+                    Import this to Database 
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+              </form>
+              
+            </div>
+
+            </div>
+    </div>
+</div>
+<div class="row">
+{{-- IMPORT AVAILABLETIME FROM EXCEL --}}
+    <div class="col-md-5">
+            <div class="card ct-card">
+                <div class="card-header ct-header py-reduced-1">
+              <small>
+                <i class="fa fa-cog" aria-hidden="true"></i> Import From Excel
+              </small>
+              {{-- <i class="fa fa-cog" aria-hidden="true"></i>
+              Import from Excel --}}
+            </div>
+
+            <div class="card-body">
+              <h5>Select Excel File</h5>
+              <hr>
+              
+              <form method="POST" action="/admin/teachers/import-available-time" name="import-available-time" enctype="multipart/form-data">
+                @csrf
+                {{-- SELECT EXCEL FILE --}}
+                  <div class="form-group">
+                    <small class="ct-small-font"> From </small>
+                    <input type="file" class="form-control tobe-reset required" name="excelFile" placeholder="Excel File">
+                  </div>
+                  <button type="submit" id="importAvailableTime" class="btn btn-danger pull-right">
+                    Import this to Database 
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+              </form>
+              
+            </div>
+
+            </div>
+    </div>
+</div>
 </div>
 
 <!-- xx ADD ACADEMICYEAR modal -->

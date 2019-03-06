@@ -19,6 +19,14 @@ use App\User;
 use Illuminate\Http\Request;
 use Validator;
 
+use App\Imports\ProgramsImport;
+use App\Imports\TeachersImport;
+use App\Imports\TeachersAvailabilityImport;
+use App\Imports\RoomsImport;
+use App\Imports\CoursesImport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 class HomeController extends Controller
 {
     /**
@@ -2481,5 +2489,88 @@ return redirect('admin/rooms');
 
     return json_encode($status);
   }
+
+  public function importProgram(Request $request) 
+    {
+      //checks if file is present
+      if(request()->file('excelFile'))
+      {
+        $excel = $request->file('excelFile');
+      Excel::import(new ProgramsImport, $excel, \Maatwebsite\Excel\Excel::XLSX);
+        
+        return back();
+      }
+      else{
+        return back();
+      }
+      
+    }
+
+    public function importTeacher(Request $request) 
+    {
+      //checks if file is present
+      if(request()->file('excelFile'))
+      {
+        $excel = $request->file('excelFile');
+      Excel::import(new TeachersImport, $excel, \Maatwebsite\Excel\Excel::XLSX);
+        
+        return back();
+      }
+      else{
+        return back();
+      }
+      
+    }
+
+    public function importRoom(Request $request) 
+    {
+      //checks if file is present
+      if(request()->file('excelFile'))
+      {
+        $excel = $request->file('excelFile');
+      Excel::import(new RoomsImport, $excel, \Maatwebsite\Excel\Excel::XLSX);
+        
+        return back();
+      }
+      else{
+        return back();
+      }
+      
+    }
+
+    public function importCourse(Request $request) 
+    {
+      //checks if file is present
+      if(request()->file('excelFile'))
+      {
+        $excel = $request->file('excelFile');
+      Excel::import(new CoursesImport, $excel, \Maatwebsite\Excel\Excel::XLSX);
+        
+        return back();
+      }
+      else{
+        return back();
+      }
+      
+    }
+
+    public function importAvailableTime(Request $request) 
+    {
+      //checks if file is present
+      if(request()->file('excelFile'))
+      {
+        $excel = $request->file('excelFile');
+      Excel::import(new TeachersAvailabilityImport, $excel, \Maatwebsite\Excel\Excel::XLSX);
+        
+        return back();
+      }
+      else{
+        return back();
+      }
+      
+    }
+    
+
+
 
 }

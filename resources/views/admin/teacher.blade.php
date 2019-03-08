@@ -261,7 +261,7 @@
             <div class="card ct-card">
                 <div class="card-header ct-header py-reduced-1">
               <small>
-                <i class="fa fa-cog" aria-hidden="true"></i> Import From Excel
+                <i class="fa fa-cog" aria-hidden="true"></i> Import Teachers From Excel
               </small>
               {{-- <i class="fa fa-cog" aria-hidden="true"></i>
               Import from Excel --}}
@@ -295,7 +295,7 @@
             <div class="card ct-card">
                 <div class="card-header ct-header py-reduced-1">
               <small>
-                <i class="fa fa-cog" aria-hidden="true"></i> Import From Excel
+                <i class="fa fa-cog" aria-hidden="true"></i> Import Teachers Available Time From Excel
               </small>
               {{-- <i class="fa fa-cog" aria-hidden="true"></i>
               Import from Excel --}}

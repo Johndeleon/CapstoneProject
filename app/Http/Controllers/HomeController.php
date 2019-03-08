@@ -744,6 +744,7 @@ return redirect('admin/rooms');
     $prog_w_schedule = Schedule::where('academic_year_id', $req->ay)
                               ->where('semester', $req->sem)
                               ->where('program_id', $req->id)
+                              ->orderBy('level','asc')
                               ->get();
 
     $withSchedule = array();
@@ -1074,6 +1075,7 @@ return redirect('admin/rooms');
     $s = Schedule::where('academic_year_id', $req->academic_year)
                   ->where('semester', $req->semester)
                   ->where('program_id', $req->id)
+                  ->where('level',$req->level)
                   ->get();
 
     return json_encode($s);

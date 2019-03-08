@@ -156,33 +156,33 @@ class DatabaseSeeder extends Seeder
 
         // }
 
-        for ($z=1;$z<=30;$z++) {
-            $randtime = rand(0,5);
+        // for ($z=1;$z<=30;$z++) {
+        //     $randtime = rand(0,5);
 
 
-            DB::table('rooms')->insert([
-                'room_name' => 'dsr'.$z,
-                'room_type_id' => 1,
-                'available_time_start' => $timeStart[$randtime],
-                'available_time_finish' => 2000
-            ]);
+        //     DB::table('rooms')->insert([
+        //         'room_name' => 'dsr'.$z,
+        //         'room_type_id' => 1,
+        //         'available_time_start' => $timeStart[$randtime],
+        //         'available_time_finish' => 2000
+        //     ]);
 
             
-        }
+        // }
 
-        for ($z=1;$z<=4;$z++) {
-            $randtime = rand(0,11);
+        // for ($z=1;$z<=4;$z++) {
+        //     $randtime = rand(0,11);
 
 
-        DB::table('rooms')->insert([
-            'room_name' => 'comlab'.$z,
-            'room_type_id' => 2,
-            'available_time_start' => $timeStart[$randtime],
-            'available_time_finish' => 2000
-        ]);
+        // DB::table('rooms')->insert([
+        //     'room_name' => 'comlab'.$z,
+        //     'room_type_id' => 2,
+        //     'available_time_start' => $timeStart[$randtime],
+        //     'available_time_finish' => 2000
+        // ]);
 
         
-    }
+   // }
 
        
     }

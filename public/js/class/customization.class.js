@@ -36,6 +36,7 @@ var customizationMaintenance = function() {
                     academic_year: academic_year,
                     semester: semester,
                     id: program_id,
+                    level,level,
                     '_token': $('input[name=_token]').val(),
                 },
                 cache: false,

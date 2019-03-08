@@ -30,8 +30,9 @@ var dashboardMaintenance = function() {
 				},
 				dataType: 'json',
 				success: function(data) {
-
+					console.log(data);
 					if (data.status == true) {
+						
 						$(document).find('#item-container').empty();
 
 						for (i = 0; i < data.level; i++) {

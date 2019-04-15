@@ -1,0 +1,161 @@
+/* DROPDOWN MENU */
+.black {
+	background: black;
+}
+
+.card-label {
+  padding: 0;
+  margin: 0;
+  background: #3498db;
+  border-radius: 5px;
+  border: 10px solid #2980b9;
+  text-align: center;
+  width: 240px;
+  height: 80px;
+  line-height: 60px;
+  position: relative;
+  text-transform: uppercase;
+  font-size: 1rem;
+  /*font-weight: bold;*/
+  /*color: rgba(0, 0, 0, 0.7);*/
+  color: #ecf0f1;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+#schedules-level {
+  position: absolute;
+  top: 25%;
+  left: -30%;
+  transfrom: translate(-50%, -50%);
+  transition: 0.6s ease-out;
+}
+
+.program-title {
+  transition: 0.3s ease-in;
+}
+
+.view-sched {
+  border: 3px solid #ecf0f5;
+  line-height: 13px !important;
+}
+
+.card-label:hover > #schedules-level {
+  left: 50%;
+}
+.card-label:hover > .program-title {
+  color: transparent;
+}
+
+.data-wrapper {
+  font-size: 0.8rem;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.ay-section {
+  background: #222d32;
+  top: 3.3rem;
+  right: 0;
+  height: 92.1vh;
+  /*width: 189px;*/
+  width: 25rem;
+  position: absolute;
+  color: #f0fff8;
+}
+
+.ct-placeholder {
+  color: #666;
+  height: 80vh;
+  
+  margin: 0 auto;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ct-placeholder h4 {
+  font-size: 2rem;
+}
+
+.font-right-sidebar {
+  color: white;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.admin-title-desc {
+  color: #222d32;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.check-pointer {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.font-del {
+  color: #222d32;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.sin-del {
+  font-size: 16px;
+}
+
+.nav-levels {
+  background: #ffffff;
+  border: none;
+}
+
+.admin-tbody {
+  background: #ecf0f5;
+  color: #222d32;
+  font-size: 13px;
+  
+}
+.admin-tbody > tr > td {
+  padding: 5px 6px !important;
+  line-height: 24px;
+}
+
+.admin-tbody > tr > td:nth-child(1) {
+  line-height: 25px;
+}
+.admin-tbody > tr > td:nth-child(2) {
+  padding: 5px 15px !important;
+}
+.admin-tbody > tr > td:nth-child(4) > div {
+  display: none;
+}
+.admin-tbody > tr:hover > td:nth-child(4) > div {
+  display: block;
+}
+
+
+.lev-wrapper {
+  height: 82vh;
+  padding-top: 30px;
+}
+
+.c_title {
+  font-size: 12px;
+  /*font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;*/
+}
+
+.card-item {
+  font-size: 8px;
+}
